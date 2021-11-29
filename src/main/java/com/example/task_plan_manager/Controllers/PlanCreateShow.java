@@ -116,7 +116,7 @@ public class PlanCreateShow extends VBox {
                 for (FileShow i:files) {
                     i.moveFile("./tmp/");
                 }
-                FileUtils.deleteFile("./tmp/");
+                FileUtils.deleteFolder("./tmp/");
             }
         }
         Pass.getMainShow().getChildren().clear();

@@ -67,7 +67,6 @@ public class FileShow extends HBox {
         }
         String to=path+name.getText()+file.getName().substring(len);
         if (path.startsWith(new File("./data/").getAbsolutePath())||flag)return FileUtils.copyFile(file,to);
-        System.out.println("aaa");
         if (Globe.getUser().isCut())return FileUtils.moveFile(file,to);
         else return FileUtils.copyFile(file,to);
     }
