@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root prefHeight="80.0" prefWidth="500.0" style="-fx-padding: 0;" type="HBox" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefHeight="80.0" prefWidth="380.0">
+        <TextField fx:id="name" minHeight="40.0" minWidth="380.0">
+            <VBox.margin>
+                <Insets left="3.0" top="3.0" />
+            </VBox.margin>
+         <font>
+            <Font size="20.0" />
+         </font>
+        </TextField>
+        <Hyperlink fx:id="link_file" minHeight="30.0" minWidth="380.0" text="link">
+            <font>
+                <Font size="20.0" />
+            </font>
+            <VBox.margin>
+                <Insets left="3.0" />
+            </VBox.margin>
+        </Hyperlink>
+    </VBox>
+    <Label minWidth="30.0" visible="false" />
+    <Button fx:id="delete" minHeight="70.0" minWidth="80.0" mnemonicParsing="false" text="删除">
+        <HBox.margin>
+          <Insets left="5.0" top="5.0" />
+        </HBox.margin>
+        <font>
+          <Font size="20.0" />
+        </font>
+    </Button>
+</fx:root>

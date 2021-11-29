@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root type="VBox" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <HBox prefHeight="40.0" prefWidth="640.0" style="-fx-background-color: #D7D7D7;">
+      <Label alignment="CENTER" contentDisplay="CENTER" minHeight="40.0" minWidth="260.0" style="-fx-border-color: #B4B4B4;" text="名称" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" minHeight="40.0" minWidth="140.0" style="-fx-border-color: #B4B4B4;" text="开始时间" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" minHeight="40.0" minWidth="140.0" style="-fx-border-color: #B4B4B4;" text="结束时间" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" minHeight="40.0" minWidth="100.0" style="-fx-border-color: #B4B4B4;" text="重要性" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </HBox>
+   <ScrollPane minViewportHeight="490.0" minViewportWidth="640.0" style="-fx-padding: 0;">
+      <VBox fx:id="window" minWidth="640.0" prefHeight="4.0" prefWidth="641.0" />
+   </ScrollPane>
+</fx:root>

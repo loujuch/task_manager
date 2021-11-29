@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root minHeight="520.0" minWidth="634.0" type="VBox" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox prefHeight="525.0" prefWidth="634.0">
+            <children>
+                <HBox prefHeight="50.0" prefWidth="200.0">
+                    <children>
+                        <Label alignment="TOP_LEFT" minHeight="40.0" minWidth="150.0" text="名称/关键字：" textAlignment="CENTER">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="name" minHeight="30.0" minWidth="320.0" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="110.0" prefWidth="474.0">
+                    <children>
+                        <Label alignment="TOP_LEFT" minHeight="40.0" minWidth="150.0" text="开始时间：" textAlignment="CENTER">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <DatePicker fx:id="start_first" editable="false" minHeight="30.0" minWidth="320.0" />
+                                <Label alignment="CENTER" minWidth="320.0" text="到" textAlignment="CENTER">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" top="5.0" />
+                                    </VBox.margin>
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Label>
+                                <DatePicker fx:id="start_second" editable="false" minHeight="30.0" minWidth="320.0" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <HBox prefHeight="110.0" prefWidth="474.0">
+                    <children>
+                        <Label alignment="TOP_LEFT" minHeight="40.0" minWidth="150.0" text="结束时间：" textAlignment="CENTER">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <DatePicker fx:id="end_first" editable="false" minHeight="30.0" minWidth="320.0" />
+                                <Label alignment="CENTER" minWidth="320.0" text="到" textAlignment="CENTER">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" top="5.0" />
+                                    </VBox.margin>
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Label>
+                                <DatePicker fx:id="end_second" editable="false" minHeight="30.0" minWidth="320.0" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <HBox prefHeight="55.0" prefWidth="200.0">
+                    <children>
+                        <Label alignment="TOP_LEFT" minHeight="40.0" minWidth="150.0" text="重要性：" textAlignment="CENTER">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                  <ChoiceBox fx:id="importance" minHeight="30.0" minWidth="320.0" />
+                    </children>
+                </HBox>
+                <Button fx:id="search" minHeight="50.0" minWidth="350.0" mnemonicParsing="false" text="搜索" translateX="75.0">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Button>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <padding>
+                <Insets bottom="50.0" left="80.0" right="80.0" top="50.0" />
+            </padding>
+        </VBox>
+    </children>
+</fx:root>
