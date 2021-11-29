@@ -84,6 +84,11 @@ public class EventUtils {
 
     public static int createEvent(String name, LocalDate left, LocalDate right, int importance,
                                   String detail, ArrayList<FileShow>files, int offset, int time) {
+        return createEvent(name,left,right,importance,detail,files,offset,time,-1);
+    }
+
+    public static int createEvent(String name, LocalDate left, LocalDate right, int importance,
+                                  String detail, ArrayList<FileShow>files, int offset, int time, int belong) {
         if (name==null||left==null||right==null||detail==null||files==null) {
             ErrorUtils.NullPointerInputError(TAG + "createEvent");
             return -1;
@@ -91,7 +96,7 @@ public class EventUtils {
         int num=DateBaseUtils.createEvent(name,
                 left.atStartOfDay().toInstant(ZoneOffset.of("+8")).toEpochMilli(),
                 right.plusDays(1).atStartOfDay().toInstant(ZoneOffset.of("+8")).toEpochMilli()-1,
-                importance,!detail.isBlank(),!files.isEmpty(),offset,time);
+                importance,!detail.isBlank(),!files.isEmpty(),offset,time,belong);
         if (num==-1) {
             ErrorUtils.OperateFail();
             return -2;
@@ -112,7 +117,7 @@ public class EventUtils {
             DateBaseUtils.createFile(Globe.getUser().getId(),num,i,
                     fileShow.getName(),path+fileShow.getPath(),FileUtils.IN);
         }
-        return 0;
+        return num;
     }
 
     public static int updateEvent(int id, String name, LocalDate left, LocalDate right, int importance, String detail,

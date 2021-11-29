@@ -76,8 +76,8 @@ public class PlanCreateShow extends VBox {
 
     public void onFinish() {
         String s=name.getText();
-        LocalDate left=start.getValue();
-        LocalDate right=end.getValue();
+        LocalDate left=start.getValue().atStartOfDay().toLocalDate();
+        LocalDate right=end.getValue().atStartOfDay().toLocalDate();
         String detailStr=detail.getText();
         String timeStr=continue_time.getText();
         String spaceStr=space.getText();
@@ -101,10 +101,13 @@ public class PlanCreateShow extends VBox {
             }
             set.add(i.getName());
         }
+        int spaceInt=Integer.parseInt(spaceStr);
+        int timeInt=Integer.parseInt(timeStr);
         if (id==-1) {
-            EventUtils.createEvent(s,left,right,important,detailStr,files,
-                    Integer.parseInt(spaceStr),Integer.parseInt(timeStr));
-
+            int num=EventUtils.createEvent(s,left,right,important,detailStr,files,spaceInt,timeInt);
+            for (;left.isBefore(right.plusDays(1));left=left.plusDays(spaceInt+timeInt)) {
+                EventUtils.createEvent(s,left,left.plusDays(timeInt),important,detailStr,files,-1,-1,num);
+            }
         }
         Pass.getMainShow().getChildren().clear();
         Pass.getMainShow().getChildren().add(new PlanCreateShow());
