@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 public class PlanUpdateShow extends VBox {
@@ -98,13 +99,21 @@ public class PlanUpdateShow extends VBox {
     }
 
     private void onOK(int offset, int event) {
+        HashSet<String> set=new HashSet<>();
+        for (FileShow i:in) {
+            if (set.contains(i.getName())) {
+                ErrorUtils.FileNameRepeat();
+                return;
+            }
+            set.add(i.getName());
+        }
         String new_name=name.getText();
         LocalDate new_start=start.getValue();
         LocalDate new_end=end.getValue();
         String new_detail=detail.getText();
         int new_offset=Integer.parseInt(space.getText());
         int new_continue=Integer.parseInt(continue_time.getText());
-        if (new_continue==0) {
+        if (new_continue<=0||new_name.isBlank()) {
             ErrorUtils.Error();
             return;
         }

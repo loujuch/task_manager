@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class FileShow extends HBox {
@@ -65,7 +66,8 @@ public class FileShow extends HBox {
             return false;
         }
         String to=path+name.getText()+file.getName().substring(len);
-        if (path.startsWith("./data/")||flag)return FileUtils.copyFile(file,to);
+        if (path.startsWith(new File("./data/").getAbsolutePath())||flag)return FileUtils.copyFile(file,to);
+        System.out.println("aaa");
         if (Globe.getUser().isCut())return FileUtils.moveFile(file,to);
         else return FileUtils.copyFile(file,to);
     }

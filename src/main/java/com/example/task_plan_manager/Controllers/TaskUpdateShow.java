@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 public class TaskUpdateShow extends VBox {
@@ -98,11 +99,30 @@ public class TaskUpdateShow extends VBox {
     }
 
     private void onOK(int offset, String s) {
+        HashSet<String> set=new HashSet<>();
+        for (FileShow i:in) {
+            if (set.contains(i.getName())) {
+                ErrorUtils.FileNameRepeat();
+                return;
+            }
+            set.add(i.getName());
+        }
+        for (FileShow i:out) {
+            if (set.contains(i.getName())) {
+                ErrorUtils.FileNameRepeat();
+                return;
+            }
+            set.add(i.getName());
+        }
         String new_name=name.getText();
         LocalDate new_start=start.getValue();
         LocalDate new_end=end.getValue();
         String new_detail=detail.getText();
         String new_remark=remark.getText();
+        if (new_name.isBlank()) {
+            ErrorUtils.InputLengthError();
+            return;
+        }
         EventUtils.updateEvent(event,new_name,new_start,new_end,new_importance,
                 new_detail,new_remark,in,out,-1,-1);
         Pass.getMainShow().getChildren().clear();

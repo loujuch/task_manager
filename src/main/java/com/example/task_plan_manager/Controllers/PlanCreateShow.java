@@ -1,9 +1,11 @@
 package com.example.task_plan_manager.Controllers;
 
 import com.example.task_plan_manager.Event;
+import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Pass;
 import com.example.task_plan_manager.Utils.ErrorUtils;
 import com.example.task_plan_manager.Utils.EventUtils;
+import com.example.task_plan_manager.Utils.FileUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -104,10 +106,17 @@ public class PlanCreateShow extends VBox {
         int spaceInt=Integer.parseInt(spaceStr);
         int timeInt=Integer.parseInt(timeStr);
         if (id==-1) {
-            int num=EventUtils.createEvent(s,left,right,important,detailStr,files,spaceInt,timeInt);
+            int num=EventUtils.createEvent(s,left,right,important,detailStr,files,spaceInt,timeInt,-1,true);
             for (;left.isBefore(right.plusDays(1));left=left.plusDays(spaceInt+timeInt)) {
                 EventUtils.createEvent(s,left,left.plusDays(timeInt-1),important,detailStr,
-                        files,-1,-1,num,false);
+                        files,-1,-1,num,true);
+            }
+            if (Globe.getUser().isCut()) {
+                FileUtils.createFolder("./tmp/");
+                for (FileShow i:files) {
+                    i.moveFile("./tmp/");
+                }
+                FileUtils.deleteFile("./tmp/");
             }
         }
         Pass.getMainShow().getChildren().clear();
