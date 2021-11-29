@@ -6,6 +6,7 @@ import com.example.task_plan_manager.Utils.FileUtils;
 import com.example.task_plan_manager.Utils.UIUtils;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ public class HelloApplication extends Application {
             ErrorUtils.InitFail();
             return;
         }
+        stage.getIcons().add(new Image("file:./Icon.png"));
         Globe.setStage(stage);
         if (FileUtils.existNow()) {
             int flag=EventUtils.start();

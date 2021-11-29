@@ -90,7 +90,7 @@
                     </font>
                 </Label>
                 <VBox fx:id="file_local">
-                    <Label minHeight="30.0" minWidth="100.0" text="本地缓存：">
+                    <Label minHeight="-Infinity" minWidth="-Infinity" text="本地缓存：">
                         <font>
                             <Font size="17.0" />
                         </font>
