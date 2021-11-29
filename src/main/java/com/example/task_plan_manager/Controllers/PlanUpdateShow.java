@@ -110,6 +110,11 @@ public class PlanUpdateShow extends VBox {
         }
         EventUtils.updateEvent(event,new_name,new_start,new_end,new_importance,
                 new_detail,"",in,new ArrayList<>(),new_offset,new_continue);
+        List<Integer>out=DateBaseUtils.getEventIdByBelong(event);
+        for (int i:out) {
+            EventUtils.updateEvent(i,new_name,null,null,new_importance,
+                    new_detail,"",in,new ArrayList<>(),-1,-1);
+        }
         Pass.getMainShow().getChildren().clear();
         Pass.getMainShow().getChildren().add(new EventsShow(null,offset));
     }

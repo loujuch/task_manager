@@ -84,11 +84,12 @@ public class EventUtils {
 
     public static int createEvent(String name, LocalDate left, LocalDate right, int importance,
                                   String detail, ArrayList<FileShow>files, int offset, int time) {
-        return createEvent(name,left,right,importance,detail,files,offset,time,-1);
+        return createEvent(name,left,right,importance,detail,files,offset,time,-1, false);
     }
 
     public static int createEvent(String name, LocalDate left, LocalDate right, int importance,
-                                  String detail, ArrayList<FileShow>files, int offset, int time, int belong) {
+                                  String detail, ArrayList<FileShow>files, int offset, int time,
+                                  int belong, boolean flag) {
         if (name==null||left==null||right==null||detail==null||files==null) {
             ErrorUtils.NullPointerInputError(TAG + "createEvent");
             return -1;
@@ -113,7 +114,7 @@ public class EventUtils {
         path+="in/";
         for (int i=0;i<files.size();++i) {
             FileShow fileShow=files.get(i);
-            fileShow.moveFile(path);
+            fileShow.moveFile(path,flag);
             DateBaseUtils.createFile(Globe.getUser().getId(),num,i,
                     fileShow.getName(),path+fileShow.getPath(),FileUtils.IN);
         }
@@ -122,10 +123,17 @@ public class EventUtils {
 
     public static int updateEvent(int id, String name, LocalDate left, LocalDate right, int importance, String detail,
                                   String remark, ArrayList<FileShow>in,ArrayList<FileShow>out,int offset, int time) {
-        boolean flag=DateBaseUtils.updateEvent(id,name,
-                left.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
-                right.plusDays(1).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()-1,
-                importance,!detail.isBlank(),!remark.isBlank(),!in.isEmpty(),!out.isEmpty(),offset,time);
+        boolean flag;
+        if (left==null||right==null) {
+            flag=DateBaseUtils.updateEvent(id,name, -1, -1,
+                    importance,!detail.isBlank(),!remark.isBlank(),!in.isEmpty(),!out.isEmpty(),offset,time);
+        }
+        else {
+            flag=DateBaseUtils.updateEvent(id,name,
+                    left.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
+                    right.plusDays(1).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()-1,
+                    importance,!detail.isBlank(),!remark.isBlank(),!in.isEmpty(),!out.isEmpty(),offset,time);
+        }
         if (!flag)return -1;
         String path="./data/"+Globe.getUser().getId()+"/"+id+"/";
         FileUtils.writeFile(detail,path+"detail");

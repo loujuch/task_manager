@@ -106,7 +106,8 @@ public class PlanCreateShow extends VBox {
         if (id==-1) {
             int num=EventUtils.createEvent(s,left,right,important,detailStr,files,spaceInt,timeInt);
             for (;left.isBefore(right.plusDays(1));left=left.plusDays(spaceInt+timeInt)) {
-                EventUtils.createEvent(s,left,left.plusDays(timeInt),important,detailStr,files,-1,-1,num);
+                EventUtils.createEvent(s,left,left.plusDays(timeInt-1),important,detailStr,
+                        files,-1,-1,num,false);
             }
         }
         Pass.getMainShow().getChildren().clear();

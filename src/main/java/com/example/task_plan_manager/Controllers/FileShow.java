@@ -59,14 +59,18 @@ public class FileShow extends HBox {
         return name.getText()+file.getName().substring(len);
     }
 
-    public boolean moveFile(String path) {
+    public boolean moveFile(String path, boolean flag) {
         if (path==null) {
             ErrorUtils.NullPointerInputError(TAG+"moveFile");
             return false;
         }
         String to=path+name.getText()+file.getName().substring(len);
-        if (path.startsWith("./data/"))return FileUtils.copyFile(file,to);
+        if (path.startsWith("./data/")||flag)return FileUtils.copyFile(file,to);
         if (Globe.getUser().isCut())return FileUtils.moveFile(file,to);
         else return FileUtils.copyFile(file,to);
+    }
+
+    public boolean moveFile(String path) {
+        return moveFile(path,false);
     }
 }

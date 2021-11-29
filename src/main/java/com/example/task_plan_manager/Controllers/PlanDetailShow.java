@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
@@ -76,7 +75,10 @@ public class PlanDetailShow extends VBox {
             return;
         }
         delete_event.setOnAction(e -> {
+            List<Integer>out=DateBaseUtils.getEventIdByBelong(id);
             EventUtils.deleteEvent(id);
+            assert out != null;
+            for (int i:out)EventUtils.deleteEvent(i);
             Pass.getMainShow().getChildren().clear();
             Pass.getMainShow().getChildren().add(new EventsShow(null,offset-(sub?1:0)));
         });

@@ -411,6 +411,37 @@ public class DateBaseUtils {
         return out;
     }
 
+    public static List<Integer> getEventIdByBelong(int belong) {
+        List<Integer>out=new ArrayList<>();
+        Connection connection=null;
+        Statement statement=null;
+        ResultSet resultSet=null;
+        try{
+            Class.forName("org.sqlite.JDBC");
+            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            statement=connection.createStatement();
+            resultSet=statement.executeQuery("select id from event where finish = false and belong="+belong+";");
+            while (resultSet.next()) {
+                out.add(resultSet.getInt("id"));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                assert connection != null;
+                connection.close();
+                assert statement != null;
+                statement.close();
+                assert resultSet != null;
+                resultSet.close();
+            } catch (SQLException throw_ables) {
+                throw_ables.printStackTrace();
+            }
+        }
+        return out;
+    }
+
     public static List<Object> getEventById(int id) {
         List<Object>out=new ArrayList<>();
         Connection connection=null;
@@ -505,6 +536,12 @@ public class DateBaseUtils {
 
     public static boolean updateEvent(int id, String name, long start, long end, int importance,
                                       boolean detail, boolean remark, boolean in, boolean out, int offset, int time) {
+        if (start<0) {
+            return operator("update event set " +
+                    String.format("name='%s', importance=%d, offset=%d, time=%d, " +
+                                    "detail=%b, remark=%b, in_flag=%b, out=%b, last=%d", name, importance,
+                            offset, time, detail, remark, in, out, OtherUtils.getNowTime()) + " where id=" + id);
+        }
         return operator("update event set " +
                 String.format("name='%s', start=%d, end=%d, importance=%d, offset=%d, time=%d, " +
                                 "detail=%b, remark=%b, in_flag=%b, out=%b, last=%d", name, start, end, importance,
