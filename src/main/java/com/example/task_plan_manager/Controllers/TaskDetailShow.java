@@ -67,15 +67,15 @@ public class TaskDetailShow extends EventDetailShow {
         important.setText(Event.IMPORT[importance]);
         start.setText(OtherUtils.getDateString(new Date(startTime)));
         end.setText(OtherUtils.getDateString(new Date(endTime)));
-        if (!(setFileShow(detail_label,detail,"detail",(boolean) tmp.get(4))&&
-                setFileShow(remark_label,remark,"remark",(boolean) tmp.get(5)))) {
+        if (!(setFileShow(detail_label,detail,"detail",(boolean) tmp.get(4),event)&&
+                setFileShow(remark_label,remark,"remark",(boolean) tmp.get(5),event))) {
             ErrorUtils.OperateFail();
             return;
         }
         if (!(setDateBaseShow(file_label,file_local,file_local_add,file_cloud,
-                file_cloud_add,(boolean) tmp.get(6),FileUtils.IN)&&
+                file_cloud_add,(boolean) tmp.get(6),FileUtils.IN,event)&&
             setDateBaseShow(other_label,other_local,other_local_add,other_cloud,
-                    other_cloud_add,(boolean) tmp.get(7),FileUtils.OUT))) {
+                    other_cloud_add,(boolean) tmp.get(7),FileUtils.OUT,event))) {
             ErrorUtils.OperateFail();
             return;
         }
@@ -106,59 +106,5 @@ public class TaskDetailShow extends EventDetailShow {
             Pass.getMainShow().getChildren().clear();
             Pass.getMainShow().getChildren().add(new TaskUpdateShow(tmp,id,offset,s));
         });
-    }
-
-    private boolean setFileShow(VBox vBox, VBox text, String path, boolean have) {
-        if (vBox==null||text==null||path==null) {
-            ErrorUtils.NullPointerInputError(TAG+"setFileShow");
-            return false;
-        }
-        vBox.setVisible(have);
-        vBox.setManaged(have);
-        if (have) {
-            List<String>list= FileUtils.readFile("./data/"+ Globe.getUser().getId()+"/"+event+"/"+path);
-            for (String s:list) {
-                Label label=new Label();
-                label.setFont(Font.font("System",20));
-                label.setWrapText(true);
-                label.setText(s);
-                text.getChildren().add(label);
-            }
-        }
-        return true;
-    }
-
-    private boolean setDateBaseShow(VBox label, VBox local, VBox local_add, VBox cloud, VBox cloud_add,
-                                    boolean have, boolean io) {
-        if (label==null||local==null||local_add==null||cloud==null||cloud_add==null) {
-            ErrorUtils.NullPointerInputError(TAG+"setDateBaseShow");
-            return false;
-        }
-        label.setVisible(have);
-        label.setManaged(have);
-        if (!have)return true;
-        List<Pair<Integer, String>>tmp=DateBaseUtils.getFile(Globe.getUser().getId(),event,io,-1);
-        if (tmp==null||tmp.isEmpty()) {
-            local.setVisible(false);
-            local.setManaged(false);
-        } else {
-            for (Pair<Integer, String> i:tmp) {
-                int left=i.getValue().lastIndexOf('/')+1;
-                local_add.getChildren().add(new FileLinkShow(i.getValue().substring(left),
-                        i.getValue(),FileUtils.LOCAL,i.getKey(),event,local,cloud));
-            }
-        }
-        tmp=DateBaseUtils.getFile(Globe.getUser().getId(),event,io,0);
-        if (tmp==null||tmp.isEmpty()) {
-            cloud.setVisible(false);
-            cloud.setManaged(false);
-        } else {
-            for (Pair<Integer, String> i:tmp) {
-                int left=i.getValue().lastIndexOf('/')+1;
-                cloud_add.getChildren().add(new FileLinkShow(i.getValue().substring(left),
-                        i.getValue(),FileUtils.CLOUD,i.getKey(),event,cloud,local));
-            }
-        }
-        return true;
     }
 }
