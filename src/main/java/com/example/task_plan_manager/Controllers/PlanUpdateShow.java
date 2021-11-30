@@ -88,13 +88,8 @@ public class PlanUpdateShow extends EventUpdateShow {
     }
 
     private void onOK(int offset, int event) {
-        HashSet<String> set=new HashSet<>();
-        for (FileShow i:in) {
-            if (set.contains(i.getName())) {
-                ErrorUtils.FileNameRepeat();
-                return;
-            }
-            set.add(i.getName());
+        if (!UIUtils.isDuplicate(in)) {
+            return;
         }
         String new_name=name.getText();
         LocalDate new_start=start.getValue();

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class UIUtils {
@@ -62,5 +63,17 @@ public class UIUtils {
                 root.getChildren().add(fileShow);
             }
         }
+    }
+
+    public static boolean isDuplicate(ArrayList<FileShow>files) {
+        HashSet<String> set=new HashSet<>();
+        for (FileShow i:files) {
+            if (set.contains(i.getName())) {
+                ErrorUtils.FileNameRepeat();
+                return false;
+            }
+            set.add(i.getName());
+        }
+        return true;
     }
 }

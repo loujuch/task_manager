@@ -127,13 +127,8 @@ public class TaskCreateShow extends VBox {
             ErrorUtils.DateError();
             return;
         }
-        HashSet<String>set=new HashSet<>();
-        for (FileShow i:files) {
-            if (set.contains(i.getName())) {
-                ErrorUtils.FileNameRepeat();
-                return;
-            }
-            set.add(i.getName());
+        if(!UIUtils.isDuplicate(files)) {
+            return;
         }
         EventUtils.createEvent(s,left,right,important,detailStr,files,-1,-1);
         Pass.getMainShow().getChildren().clear();

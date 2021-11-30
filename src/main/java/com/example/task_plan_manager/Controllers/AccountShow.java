@@ -90,6 +90,7 @@ public class AccountShow extends VBox {
     private void init() {
         User user=Globe.getUser();
         name.setText(user.getName());
+        status.setVisible(false);
         if (user.getHost()==-1) {
             Label label=new Label("离线帐号");
             label.setFont(Font.font(20));

@@ -88,13 +88,8 @@ public class PlanCreateShow extends VBox {
             ErrorUtils.DateError();
             return;
         }
-        HashSet<String> set=new HashSet<>();
-        for (FileShow i:files) {
-            if (set.contains(i.getName())) {
-                ErrorUtils.FileNameRepeat();
-                return;
-            }
-            set.add(i.getName());
+        if (!UIUtils.isDuplicate(files)) {
+            return;
         }
         int spaceInt=Integer.parseInt(spaceStr);
         int timeInt=Integer.parseInt(timeStr);
