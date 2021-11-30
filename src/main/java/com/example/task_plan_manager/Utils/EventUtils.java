@@ -35,10 +35,7 @@ public class EventUtils {
         if (port<0) {
             User use=new User(user,password,ip,2000000000);
             if(DateBaseUtils.existUser(use))return 1;
-            use=DateBaseUtils.createUser(use);
-            if(use==null) {
-                return -1;
-            }
+            use.setId(DateBaseUtils.createUser(use));
             if (use.getId()<=0) {
                 return -1;
             }

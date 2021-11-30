@@ -104,113 +104,6 @@ public class DateBaseUtils {
         return num;
     }
 
-    public static boolean init() {
-        return operator(TABLE[0])&&operator(TABLE[1])&&operator(TABLE[2]);
-    }
-
-    public static boolean existUser(User user) {
-        if (user==null) {
-            ErrorUtils.NullPointerInputError(TAG+"existUser");
-            return false;
-        }
-        int num=getNumOperator("from user "+user.getMainJudge());
-        return num>0;
-    }
-
-    public static User createUser(User user) {
-        if (user==null) {
-            ErrorUtils.NullPointerInputError(TAG+"createUser");
-            return null;
-        }
-        Connection connection=null;
-        Statement statement=null;
-        try{
-            Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
-            statement=connection.createStatement();
-            statement.executeUpdate("insert into user " +
-                    "(name, password, sort, ip, cut, delete_flag, host) "+user.getOutValues());
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert connection != null;
-                connection.close();
-                assert statement != null;
-                statement.close();
-            } catch (SQLException throw_ables) {
-                throw_ables.printStackTrace();
-            }
-        }
-        return getUser(user.getMainJudge());
-    }
-
-    public static User getUser(String judge) {
-        if (judge==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getUser");
-            return null;
-        }
-        User user=null;
-        Connection connection=null;
-        Statement statement=null;
-        ResultSet resultSet=null;
-        try{
-            Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery("select count(*) total from user "+judge);
-            int num=0;
-            if (resultSet.next()) {
-                num=resultSet.getInt("total");
-            }
-            resultSet=statement.executeQuery("select * from user "+judge);
-            if (num!=1) {
-                ErrorUtils.ArrayLengthError(TAG+"getUser",resultSet.getRow());
-                return null;
-            }
-            resultSet.next();
-            int[]ip={0,0,0,0};
-            int port=OtherUtils.getIp(ip,resultSet.getString("ip"));
-            if (port<0) {
-                ErrorUtils.IpFormatError();
-                return null;
-            }
-            user=new User(resultSet.getString("name"),
-                    resultSet.getString("password"),
-                    ip,port);
-            user.setId(resultSet.getInt("id"));
-            user.setCut(resultSet.getBoolean("cut"));
-            user.setDelete(resultSet.getBoolean("delete_flag"));
-            int[]sort={0,0,0,0};
-            OtherUtils.getSortPart(resultSet.getInt("sort"),sort);
-            user.setSort(sort);
-            user.setHost(resultSet.getInt("host"));
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert connection != null;
-                connection.close();
-                assert statement != null;
-                statement.close();
-                assert resultSet != null;
-                resultSet.close();
-            } catch (SQLException throw_ables) {
-                throw_ables.printStackTrace();
-            }
-        }
-        return user;
-    }
-
-    public static boolean deleteUser(int id) {
-        return operator("delete from user where id="+id);
-    }
-
-    public static boolean deleteEventAndFile(int id) {
-        return operator("delete from event where id="+id)&&
-                operator("delete from file where event="+id+" and use="+Globe.getUser().getId());
-    }
-
     public static int createOperator(String s, String str)  {
         int num=-1;
         Connection connection=null;
@@ -241,6 +134,37 @@ public class DateBaseUtils {
         }
         if (num==0)num=-1;
         return num;
+    }
+
+    public static boolean init() {
+        return operator(TABLE[0])&&operator(TABLE[1])&&operator(TABLE[2]);
+    }
+
+    public static boolean existUser(User user) {
+        if (user==null) {
+            ErrorUtils.NullPointerInputError(TAG+"existUser");
+            return false;
+        }
+        int num=getNumOperator("from user "+user.getMainJudge());
+        return num>0;
+    }
+
+    public static int createUser(User user) {
+        if (user==null) {
+            ErrorUtils.NullPointerInputError(TAG+"createUser");
+            return -1;
+        }
+        return createOperator("insert into user (name, password, sort, ip, cut, delete_flag, host) "+
+                user.getOutValues(),"user");
+    }
+
+    public static boolean deleteUser(int id) {
+        return operator("delete from user where id="+id);
+    }
+
+    public static boolean deleteEventAndFile(int id) {
+        return operator("delete from event where id="+id)&&
+                operator("delete from file where event="+id+" and use="+Globe.getUser().getId());
     }
 
     public static int createEvent(String name, long start, long end, int importance, boolean detail,
@@ -305,6 +229,91 @@ public class DateBaseUtils {
         return getNumOperator(" from event where "+judge);
     }
 
+    public static int getFileNum(int user, int event, int index) {
+        return getNumOperator(" from file where "+
+                String.format("use=%d and event=%d and number=%d;",user,event,index));
+    }
+
+    public static boolean finishEvent(int id, boolean remark, boolean out) {
+        return operator("update event set finish=true,remark="+remark+"," +
+                "out="+out+",last="+OtherUtils.getNowTime()+" where id="+id);
+    }
+
+    public static boolean deleteFile(int id) {
+        return operator("delete from file where event="+id);
+    }
+
+    public static boolean updateEvent(int id, String name, long start, long end, int importance,
+                                      boolean detail, boolean remark, boolean in, boolean out, int offset, int time) {
+        if (start<0) {
+            return operator("update event set " +
+                    String.format("name='%s', importance=%d, offset=%d, time=%d, " +
+                                    "detail=%b, remark=%b, in_flag=%b, out=%b, last=%d", name, importance,
+                            offset, time, detail, remark, in, out, OtherUtils.getNowTime()) + " where id=" + id);
+        }
+        return operator("update event set " +
+                String.format("name='%s', start=%d, end=%d, importance=%d, offset=%d, time=%d, " +
+                                "detail=%b, remark=%b, in_flag=%b, out=%b, last=%d", name, start, end, importance,
+                        offset, time, detail, remark, in, out, OtherUtils.getNowTime()) + " where id=" + id);
+    }
+
+    public static User getUser(String judge) {
+        if (judge==null) {
+            ErrorUtils.NullPointerInputError(TAG+"getUser");
+            return null;
+        }
+        User user=null;
+        Connection connection=null;
+        Statement statement=null;
+        ResultSet resultSet=null;
+        try{
+            Class.forName("org.sqlite.JDBC");
+            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            statement=connection.createStatement();
+            resultSet=statement.executeQuery("select count(*) total from user "+judge);
+            int num=0;
+            if (resultSet.next()) {
+                num=resultSet.getInt("total");
+            }
+            resultSet=statement.executeQuery("select * from user "+judge);
+            if (num!=1) {
+                ErrorUtils.ArrayLengthError(TAG+"getUser",resultSet.getRow());
+                return null;
+            }
+            resultSet.next();
+            int[]ip={0,0,0,0};
+            int port=OtherUtils.getIp(ip,resultSet.getString("ip"));
+            if (port<0) {
+                ErrorUtils.IpFormatError();
+                return null;
+            }
+            user=new User(resultSet.getString("name"),
+                    resultSet.getString("password"),
+                    ip,port);
+            user.setId(resultSet.getInt("id"));
+            user.setCut(resultSet.getBoolean("cut"));
+            user.setDelete(resultSet.getBoolean("delete_flag"));
+            int[]sort={0,0,0,0};
+            OtherUtils.getSortPart(resultSet.getInt("sort"),sort);
+            user.setSort(sort);
+            user.setHost(resultSet.getInt("host"));
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert connection != null;
+                connection.close();
+                assert statement != null;
+                statement.close();
+                assert resultSet != null;
+                resultSet.close();
+            } catch (SQLException throw_ables) {
+                throw_ables.printStackTrace();
+            }
+        }
+        return user;
+    }
+
     public static ArrayList<Event> getEvent(int id, String s, int offset) {
         ArrayList<Event>out=new ArrayList<>();
         Connection connection=null;
@@ -327,6 +336,84 @@ public class DateBaseUtils {
                         resultSet.getBoolean("in_flag"),
                         resultSet.getBoolean("out"),
                         resultSet.getBoolean("finish")));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                assert connection != null;
+                connection.close();
+                assert statement != null;
+                statement.close();
+                assert resultSet != null;
+                resultSet.close();
+            } catch (SQLException throw_ables) {
+                throw_ables.printStackTrace();
+            }
+        }
+        return out;
+    }
+
+    public static List<Pair<Integer, String>> getFile(int use, int event, boolean io, int host) {
+        List<Pair<Integer, String>>out=new ArrayList<>();
+        Connection connection=null;
+        Statement statement=null;
+        ResultSet resultSet=null;
+        try{
+            Class.forName("org.sqlite.JDBC");
+            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            statement=connection.createStatement();
+            resultSet=statement.executeQuery("select path,number from file where use="+use+
+                    " and event="+event+
+                    " and io="+io+
+                    " and host="+host+";");
+            while (resultSet.next()) {
+                out.add(new Pair<>(resultSet.getInt("number"),resultSet.getString("path")));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                assert connection != null;
+                connection.close();
+                assert statement != null;
+                statement.close();
+                assert resultSet != null;
+                resultSet.close();
+            } catch (SQLException throw_ables) {
+                throw_ables.printStackTrace();
+            }
+        }
+        if (out.isEmpty())return null;
+        return out;
+    }
+
+    public static List<Object> getEventById(int id) {
+        List<Object>out=new ArrayList<>();
+        Connection connection=null;
+        Statement statement=null;
+        ResultSet resultSet=null;
+        try{
+            Class.forName("org.sqlite.JDBC");
+            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            statement=connection.createStatement();
+            resultSet=statement.executeQuery("select * from event where id="+id+";");
+            if (resultSet.next()) {
+                out.add(resultSet.getString("name"));
+                out.add(resultSet.getInt("importance"));
+                out.add(resultSet.getLong("start"));
+                out.add(resultSet.getLong("end"));
+                out.add(resultSet.getBoolean("detail"));
+                out.add(resultSet.getBoolean("remark"));
+                out.add(resultSet.getBoolean("in_flag"));
+                out.add(resultSet.getBoolean("out"));
+                out.add(resultSet.getInt("offset"));
+                out.add(resultSet.getInt("time"));
+                out.add(resultSet.getBoolean("finish"));
+            } else {
+                return null;
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -440,111 +527,5 @@ public class DateBaseUtils {
             }
         }
         return out;
-    }
-
-    public static List<Object> getEventById(int id) {
-        List<Object>out=new ArrayList<>();
-        Connection connection=null;
-        Statement statement=null;
-        ResultSet resultSet=null;
-        try{
-            Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery("select * from event where id="+id+";");
-            if (resultSet.next()) {
-                out.add(resultSet.getString("name"));
-                out.add(resultSet.getInt("importance"));
-                out.add(resultSet.getLong("start"));
-                out.add(resultSet.getLong("end"));
-                out.add(resultSet.getBoolean("detail"));
-                out.add(resultSet.getBoolean("remark"));
-                out.add(resultSet.getBoolean("in_flag"));
-                out.add(resultSet.getBoolean("out"));
-                out.add(resultSet.getInt("offset"));
-                out.add(resultSet.getInt("time"));
-                out.add(resultSet.getBoolean("finish"));
-            } else {
-                return null;
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                assert connection != null;
-                connection.close();
-                assert statement != null;
-                statement.close();
-                assert resultSet != null;
-                resultSet.close();
-            } catch (SQLException throw_ables) {
-                throw_ables.printStackTrace();
-            }
-        }
-        return out;
-    }
-
-    public static int getFileNum(int user, int event, int index) {
-        return getNumOperator(" from file where "+
-                String.format("use=%d and event=%d and number=%d;",user,event,index));
-    }
-
-    public static List<Pair<Integer, String>> getFile(int use, int event, boolean io, int host) {
-        List<Pair<Integer, String>>out=new ArrayList<>();
-        Connection connection=null;
-        Statement statement=null;
-        ResultSet resultSet=null;
-        try{
-            Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery("select path,number from file where use="+use+
-                    " and event="+event+
-                    " and io="+io+
-                    " and host="+host+";");
-            while (resultSet.next()) {
-                out.add(new Pair<>(resultSet.getInt("number"),resultSet.getString("path")));
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                assert connection != null;
-                connection.close();
-                assert statement != null;
-                statement.close();
-                assert resultSet != null;
-                resultSet.close();
-            } catch (SQLException throw_ables) {
-                throw_ables.printStackTrace();
-            }
-        }
-        if (out.isEmpty())return null;
-        return out;
-    }
-
-    public static boolean finishEvent(int id, boolean remark, boolean out) {
-        return operator("update event set finish=true,remark="+remark+"," +
-                "out="+out+",last="+OtherUtils.getNowTime()+" where id="+id);
-    }
-
-    public static boolean deleteFile(int id) {
-        return operator("delete from file where event="+id);
-    }
-
-    public static boolean updateEvent(int id, String name, long start, long end, int importance,
-                                      boolean detail, boolean remark, boolean in, boolean out, int offset, int time) {
-        if (start<0) {
-            return operator("update event set " +
-                    String.format("name='%s', importance=%d, offset=%d, time=%d, " +
-                                    "detail=%b, remark=%b, in_flag=%b, out=%b, last=%d", name, importance,
-                            offset, time, detail, remark, in, out, OtherUtils.getNowTime()) + " where id=" + id);
-        }
-        return operator("update event set " +
-                String.format("name='%s', start=%d, end=%d, importance=%d, offset=%d, time=%d, " +
-                                "detail=%b, remark=%b, in_flag=%b, out=%b, last=%d", name, start, end, importance,
-                        offset, time, detail, remark, in, out, OtherUtils.getNowTime()) + " where id=" + id);
     }
 }
