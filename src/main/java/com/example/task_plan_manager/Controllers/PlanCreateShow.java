@@ -6,6 +6,7 @@ import com.example.task_plan_manager.Pass;
 import com.example.task_plan_manager.Utils.ErrorUtils;
 import com.example.task_plan_manager.Utils.EventUtils;
 import com.example.task_plan_manager.Utils.FileUtils;
+import com.example.task_plan_manager.Utils.UIUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -57,23 +58,15 @@ public class PlanCreateShow extends VBox {
         importance.getItems().add(Event.IMPORT[2]);
         importance.setValue(Event.IMPORT[0]);
         files=new ArrayList<>();
-        add.setOnAction(e -> onAddFile());
+        add.setOnAction(e -> UIUtils.onAddFile(add_file,files));
         id=-1;
         finish.setOnAction(e -> onFinish());
         importance.getSelectionModel().selectedIndexProperty().addListener(
                 (observableValue, number, t1) -> important=t1.intValue()>>>1);
         space.setText("0");
         continue_time.setText("1");
-        space.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                space.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        continue_time.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                continue_time.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
+        UIUtils.setNumberInput(space);
+        UIUtils.setNumberInput(continue_time);
     }
 
     public void onFinish() {
@@ -121,18 +114,5 @@ public class PlanCreateShow extends VBox {
         }
         Pass.getMainShow().getChildren().clear();
         Pass.getMainShow().getChildren().add(new PlanCreateShow());
-    }
-
-    @FXML
-    public void onAddFile() {
-        FileChooser fileChooser=new FileChooser();
-        List<File> list=fileChooser.showOpenMultipleDialog(new Stage());
-        if(list!=null) {
-            for (File file:list) {
-                FileShow fileShow=new FileShow(add_file,file,files);
-                files.add(fileShow);
-                add_file.getChildren().add(fileShow);
-            }
-        }
     }
 }

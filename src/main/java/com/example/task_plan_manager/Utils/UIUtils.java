@@ -1,11 +1,18 @@
 package com.example.task_plan_manager.Utils;
 
+import com.example.task_plan_manager.Controllers.FileShow;
 import com.example.task_plan_manager.HelloApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UIUtils {
 
@@ -35,5 +42,25 @@ public class UIUtils {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void setNumberInput(TextField text) {
+        text.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                text.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    }
+
+    public static void onAddFile(VBox root, ArrayList<FileShow> tmp) {
+        FileChooser fileChooser=new FileChooser();
+        List<File> list=fileChooser.showOpenMultipleDialog(new Stage());
+        if(list!=null) {
+            for (File file:list) {
+                FileShow fileShow=new FileShow(root,file,tmp);
+                tmp.add(fileShow);
+                root.getChildren().add(fileShow);
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.example.task_plan_manager.Event;
 import com.example.task_plan_manager.Pass;
 import com.example.task_plan_manager.Utils.ErrorUtils;
 import com.example.task_plan_manager.Utils.EventUtils;
+import com.example.task_plan_manager.Utils.UIUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -56,7 +57,7 @@ public class TaskCreateShow extends VBox {
         importance.getItems().add(new Separator());
         importance.getItems().add(Event.IMPORT[2]);
         importance.setValue(Event.IMPORT[0]);
-        add.setOnAction(e -> onAddFile());
+        add.setOnAction(e -> UIUtils.onAddFile(add_file,files));
         id=-1;
         finish.setOnAction(e -> onFinish());
         importance.getSelectionModel().selectedIndexProperty().addListener(
@@ -85,7 +86,7 @@ public class TaskCreateShow extends VBox {
         this.importance.setDisable(true);
         detail_label.setText("总结：");
         other_label.setText("总结附件：");
-        add.setOnAction(e -> onAddFile());
+        add.setOnAction(e -> UIUtils.onAddFile(add_file,files));
         finish.setOnAction(e -> toFinish(offset,s,sub));
     }
 
@@ -137,18 +138,5 @@ public class TaskCreateShow extends VBox {
         EventUtils.createEvent(s,left,right,important,detailStr,files,-1,-1);
         Pass.getMainShow().getChildren().clear();
         Pass.getMainShow().getChildren().add(new TaskCreateShow());
-    }
-
-    @FXML
-    public void onAddFile() {
-        FileChooser fileChooser=new FileChooser();
-        List<File>list=fileChooser.showOpenMultipleDialog(new Stage());
-        if(list!=null) {
-            for (File file:list) {
-                FileShow fileShow=new FileShow(add_file,file,files);
-                files.add(fileShow);
-                add_file.getChildren().add(fileShow);
-            }
-        }
     }
 }

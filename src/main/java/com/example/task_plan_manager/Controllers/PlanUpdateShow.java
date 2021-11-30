@@ -3,10 +3,7 @@ package com.example.task_plan_manager.Controllers;
 import com.example.task_plan_manager.Event;
 import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Pass;
-import com.example.task_plan_manager.Utils.DateBaseUtils;
-import com.example.task_plan_manager.Utils.ErrorUtils;
-import com.example.task_plan_manager.Utils.EventUtils;
-import com.example.task_plan_manager.Utils.FileUtils;
+import com.example.task_plan_manager.Utils.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -84,18 +81,10 @@ public class PlanUpdateShow extends VBox {
         boolean have=(boolean) tmp.get(7);
         importance.getSelectionModel().selectedIndexProperty().addListener(
                 (observableValue, number, t1) -> new_importance=t1.intValue()>>>1);
-        file_add.setOnAction(e -> onAddFile(file_local_add,in));
+        file_add.setOnAction(e -> UIUtils.onAddFile(file_local_add,in));
         ok.setOnAction(e -> onOK(offset,id));
-        space.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                space.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        continue_time.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                continue_time.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
+        UIUtils.setNumberInput(space);
+        UIUtils.setNumberInput(continue_time);
     }
 
     private void onOK(int offset, int event) {
@@ -126,18 +115,6 @@ public class PlanUpdateShow extends VBox {
         }
         Pass.getMainShow().getChildren().clear();
         Pass.getMainShow().getChildren().add(new EventsShow(null,offset));
-    }
-
-    public void onAddFile(VBox root, ArrayList<FileShow> tmp) {
-        FileChooser fileChooser=new FileChooser();
-        List<File>list=fileChooser.showOpenMultipleDialog(new Stage());
-        if(list!=null) {
-            for (File file:list) {
-                FileShow fileShow=new FileShow(root,file,tmp);
-                tmp.add(fileShow);
-                root.getChildren().add(fileShow);
-            }
-        }
     }
 
     private boolean fileWrite(TextArea text, String path) {

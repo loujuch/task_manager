@@ -3,10 +3,7 @@ package com.example.task_plan_manager.Controllers;
 import com.example.task_plan_manager.Event;
 import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Pass;
-import com.example.task_plan_manager.Utils.DateBaseUtils;
-import com.example.task_plan_manager.Utils.ErrorUtils;
-import com.example.task_plan_manager.Utils.EventUtils;
-import com.example.task_plan_manager.Utils.FileUtils;
+import com.example.task_plan_manager.Utils.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -93,8 +90,8 @@ public class TaskUpdateShow extends VBox {
                 true,FileUtils.OUT,out);
         importance.getSelectionModel().selectedIndexProperty().addListener(
                 (observableValue, number, t1) -> new_importance=t1.intValue()>>>1);
-        file_add.setOnAction(e -> onAddFile(file_local_add,in));
-        if (finish)other_add.setOnAction(e -> onAddFile(other_local_add,out));
+        file_add.setOnAction(e -> UIUtils.onAddFile(file_local_add,in));
+        if (finish)other_add.setOnAction(e -> UIUtils.onAddFile(other_local_add,out));
         ok.setOnAction(e -> onOK(offset,s));
     }
 
@@ -127,18 +124,6 @@ public class TaskUpdateShow extends VBox {
                 new_detail,new_remark,in,out,-1,-1);
         Pass.getMainShow().getChildren().clear();
         Pass.getMainShow().getChildren().add(new EventsShow(s,offset));
-    }
-
-    public void onAddFile(VBox root, ArrayList<FileShow>tmp) {
-        FileChooser fileChooser=new FileChooser();
-        List<File>list=fileChooser.showOpenMultipleDialog(new Stage());
-        if(list!=null) {
-            for (File file:list) {
-                FileShow fileShow=new FileShow(root,file,tmp);
-                tmp.add(fileShow);
-                root.getChildren().add(fileShow);
-            }
-        }
     }
 
     private boolean fileWrite(TextArea text, String path) {
