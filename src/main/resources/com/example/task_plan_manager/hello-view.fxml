@@ -10,9 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox style="-fx-padding: 50; -fx-background-color: rgb(135,206,250,0.7);"
-      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.task_plan_manager.Controllers.HelloController" fx:id="root">
+<VBox fx:id="root" style="-fx-padding: 50; -fx-background-color: rgb(135,206,250,0.7);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.task_plan_manager.Controllers.HelloController">
     <HBox alignment="TOP_CENTER">
         <opaqueInsets>
             <Insets />
@@ -66,7 +64,7 @@
         </Button>
     </VBox>
     <Label minHeight="20.0" text="Label" visible="false" />
-    <VBox prefHeight="134.0" prefWidth="300.0" style="-fx-background-color: rgb(255,255,255,0.7); -fx-padding: 20;">
+    <VBox prefHeight="134.0" prefWidth="300.0" style="-fx-background-color: rgb(255,255,255,0.7); -fx-padding: 20;" visible="false">
         <CheckBox fx:id="inline" contentDisplay="CENTER" minWidth="260.0" mnemonicParsing="false" onAction="#onInline" prefHeight="24.0" prefWidth="113.0" text="该用户为联网用户">
             <font>
                 <Font size="17.0" />
@@ -85,7 +83,7 @@
                     <Font size="17.0" />
                 </font>
             </Label>
-            <TextField minHeight="30.0" minWidth="120.0" prefHeight="30.0" prefWidth="185.0" fx:id="code_input">
+            <TextField fx:id="code_input" minHeight="30.0" minWidth="120.0" prefHeight="30.0" prefWidth="185.0">
                 <font>
                     <Font size="17.0" />
                 </font>
