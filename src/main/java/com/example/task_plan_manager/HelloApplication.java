@@ -5,11 +5,9 @@ import com.example.task_plan_manager.Utils.EventUtils;
 import com.example.task_plan_manager.Utils.FileUtils;
 import com.example.task_plan_manager.Utils.UIUtils;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
@@ -19,7 +17,7 @@ public class HelloApplication extends Application {
             ErrorUtils.InitFail();
             return;
         }
-        stage.getIcons().add(new Image("file:./Icon.png"));
+        stage.getIcons().add(new Image("file:"+Globe.getPath()+"/icon.png"));
         Globe.setStage(stage);
         if (FileUtils.existNow()) {
             int flag=EventUtils.start();
@@ -31,6 +29,11 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
+        if (args.length!=1) {
+            ErrorUtils.Error();
+            return;
+        }
+        Globe.setPath(args[0]);
         launch();
     }
 }

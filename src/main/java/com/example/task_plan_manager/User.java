@@ -27,7 +27,7 @@ public class User {
             return;
         }
         if (data.size()!=8) {
-            ErrorUtils.ArrayLengthError(TAG+"User",data.size());
+            ErrorUtils.Error();
             id=-1;
             return;
         }
@@ -45,7 +45,7 @@ public class User {
 
     public User(String name, String password, int[] ip, int port) {
         if(name==null||password==null||ip==null) {
-            ErrorUtils.NullPointerInputError(TAG+"User");
+            ErrorUtils.Error();
             return;
         }
         this.name=name;
@@ -63,14 +63,12 @@ public class User {
 
     public byte[] getStringStream() {
         if(name==null||password==null||ip==null||sort==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getStringStream");
+            ErrorUtils.Error();
             return null;
         }
-        if (ip.length!=4) {
-            ErrorUtils.ArrayLengthError(TAG+"getStringStream",ip.length);
-        }
-        if (sort.length!=4) {
-            ErrorUtils.ArrayLengthError(TAG+"getStringStream",sort.length);
+        if (ip.length!=4||sort.length!=4) {
+            ErrorUtils.Error();
+            return null;
         }
         return String.format("%d\n%s\n%s\n%s\n%d\n%b\n%b\n%d\n",
                 id,name,password,OtherUtils.setIp(ip,port),OtherUtils.getSortWhole(sort),cut,delete_flag,host)
@@ -79,7 +77,7 @@ public class User {
 
     public String getOutValues() {
         if(name==null||password==null||ip==null||sort==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getStringStream");
+            ErrorUtils.Error();
             return "values('','',0,'',0,0,-1);";
         }
         return String.format("values('%s', '%s', %d, '%s', %b, %b, %d);",
@@ -88,7 +86,7 @@ public class User {
 
     public String getMainJudge() {
         if(name==null||password==null||ip==null||sort==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getStringStream");
+            ErrorUtils.Error();
             return "where name='' and password='' and ip='' ";
         }
         return "where name='" +name+"' and password='"+password+"' and ip='"+OtherUtils.setIp(ip,port)+"';";

@@ -3,26 +3,22 @@ package com.example.task_plan_manager.Controllers;
 import com.example.task_plan_manager.Event;
 import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Pass;
-import com.example.task_plan_manager.Utils.*;
+import com.example.task_plan_manager.Utils.ErrorUtils;
+import com.example.task_plan_manager.Utils.EventUtils;
+import com.example.task_plan_manager.Utils.FileUtils;
+import com.example.task_plan_manager.Utils.UIUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.util.Pair;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 public class TaskUpdateShow extends EventUpdateShow {
-
-    private final static String TAG="com.example.task_plan_manager.TaskUpdateShow.";
 
     private int event;
     private int new_importance;
@@ -52,7 +48,7 @@ public class TaskUpdateShow extends EventUpdateShow {
 
     public TaskUpdateShow(List<Object>tmp, int id, int offset, String s) {
         if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"UpdateTaskShow");
+            ErrorUtils.Error();
             return;
         }
         try {
@@ -75,7 +71,7 @@ public class TaskUpdateShow extends EventUpdateShow {
         new_importance=(int) tmp.get(1);
         start.setValue(new Date((long) tmp.get(2)).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         end.setValue(new Date((long) tmp.get(3)).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        String path="./data/"+ Globe.getUser().getId()+"/"+id+"/";
+        String path=Globe.getPath()+"/data/"+ Globe.getUser().getId()+"/"+id+"/";
         if ((boolean) tmp.get(4))fileWrite(detail,path+"detail");
         boolean finish= (boolean) tmp.get(10);
         remark_label.setVisible(finish);
@@ -97,6 +93,7 @@ public class TaskUpdateShow extends EventUpdateShow {
 
     private void onOK(int offset, String s) {
         if (!(UIUtils.isDuplicate(in)&&UIUtils.isDuplicate(out))) {
+            ErrorUtils.Error();
             return;
         }
         String new_name=name.getText();

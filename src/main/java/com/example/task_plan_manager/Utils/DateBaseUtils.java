@@ -10,8 +10,6 @@ import java.util.List;
 
 public class DateBaseUtils {
 
-    private final static String TAG="com.example.task_plan_manager.Utils.DateBaseUtils.";
-
     private final static String[]TABLE={
             "create table if not exists user" +
                     "(id integer primary key autoincrement, " +
@@ -54,7 +52,7 @@ public class DateBaseUtils {
         Statement statement=null;
         try {
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             statement.executeUpdate(s);
         } catch (ClassNotFoundException | SQLException e) {
@@ -80,7 +78,7 @@ public class DateBaseUtils {
         ResultSet resultSet=null;
         try{
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             resultSet=statement.executeQuery("select count(*) total "+s);
             if (resultSet.next()) {
@@ -110,7 +108,7 @@ public class DateBaseUtils {
         Statement statement=null;
         ResultSet resultSet=null;
         try {
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             statement.executeUpdate(s);
             resultSet=statement.executeQuery("select last_insert_rowid() now_id from "+str);
@@ -142,7 +140,7 @@ public class DateBaseUtils {
 
     public static boolean existUser(User user) {
         if (user==null) {
-            ErrorUtils.NullPointerInputError(TAG+"existUser");
+            ErrorUtils.Error();
             return false;
         }
         int num=getNumOperator("from user "+user.getMainJudge());
@@ -151,7 +149,7 @@ public class DateBaseUtils {
 
     public static int createUser(User user) {
         if (user==null) {
-            ErrorUtils.NullPointerInputError(TAG+"createUser");
+            ErrorUtils.Error();
             return -1;
         }
         return createOperator("insert into user (name, password, sort, ip, cut, delete_flag, host) "+
@@ -170,7 +168,7 @@ public class DateBaseUtils {
     public static int createEvent(String name, long start, long end, int importance, boolean detail,
                                   boolean in, int offset, int time) {
         if (name==null) {
-            ErrorUtils.NullPointerInputError(TAG+"createTask");
+            ErrorUtils.Error();
             return -1;
         }
         return createOperator("insert into event " +
@@ -186,7 +184,7 @@ public class DateBaseUtils {
     public static int createEvent(String name, long start, long end, int importance, boolean detail,
                                   boolean in, int offset, int time, int belong) {
         if (name==null) {
-            ErrorUtils.NullPointerInputError(TAG+"createTask");
+            ErrorUtils.Error();
             return -1;
         }
         return createOperator("insert into event " +
@@ -200,7 +198,7 @@ public class DateBaseUtils {
 
     public static int createFile(int id, int num, int i, String name, String path, boolean io) {
         if (name==null) {
-            ErrorUtils.NullPointerInputError(TAG+"createTask");
+            ErrorUtils.Error();
             return -1;
         }
         return createOperator("insert into file " +
@@ -211,7 +209,7 @@ public class DateBaseUtils {
 
     public static int getNum(int id, String s) {
         if (s==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getNum");
+            ErrorUtils.Error();
             return -1;
         }
         return getNumOperator("from event "+s+" and holder="+id+";");
@@ -259,7 +257,7 @@ public class DateBaseUtils {
 
     public static User getUser(String judge) {
         if (judge==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getUser");
+            ErrorUtils.Error();
             return null;
         }
         User user=null;
@@ -268,7 +266,7 @@ public class DateBaseUtils {
         ResultSet resultSet=null;
         try{
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             resultSet=statement.executeQuery("select count(*) total from user "+judge);
             int num=0;
@@ -277,7 +275,7 @@ public class DateBaseUtils {
             }
             resultSet=statement.executeQuery("select * from user "+judge);
             if (num!=1) {
-                ErrorUtils.ArrayLengthError(TAG+"getUser",resultSet.getRow());
+                ErrorUtils.Error();
                 return null;
             }
             resultSet.next();
@@ -321,7 +319,7 @@ public class DateBaseUtils {
         ResultSet resultSet=null;
         try{
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             resultSet=statement.executeQuery("select * from event "+s+" and holder="+id+
                     " limit 20 offset "+20*offset+";");
@@ -362,7 +360,7 @@ public class DateBaseUtils {
         ResultSet resultSet=null;
         try{
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             resultSet=statement.executeQuery("select path,number from file where use="+use+
                     " and event="+event+
@@ -397,7 +395,7 @@ public class DateBaseUtils {
         ResultSet resultSet=null;
         try{
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             resultSet=statement.executeQuery("select * from event where id="+id+";");
             if (resultSet.next()) {
@@ -447,7 +445,7 @@ public class DateBaseUtils {
         ResultSet resultSet=null;
         try{
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             resultSet=statement.executeQuery("select * from event where "+judge+" order by "
                     +OtherUtils.getSortString(Globe.getUser().getSort())+
@@ -505,7 +503,7 @@ public class DateBaseUtils {
         ResultSet resultSet=null;
         try{
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             resultSet=statement.executeQuery("select id from event where finish = false and belong="+belong+";");
             while (resultSet.next()) {
@@ -528,4 +526,6 @@ public class DateBaseUtils {
         }
         return out;
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.task_plan_manager.Utils;
 
+import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.User;
 
 import java.io.*;
@@ -16,26 +17,24 @@ public class FileUtils {
     public final static boolean IN=false;
     public final static boolean OUT=true;
 
-    private final static String TAG="com.example.task_plan_manager.Utils.FileUtils.";
-
     public static boolean init() {
-        return createFolder("./data");
+        return createFolder(Globe.getPath()+"/data");
     }
 
     public static boolean existNow() {
-        return existFile("./now");
+        return existFile(Globe.getPath()+"/now");
     }
 
     public static boolean createNow() {
         if(existNow()) {
-            ErrorUtils.FileExist("./nom",TAG+"createNow");
+            ErrorUtils.FileExist(Globe.getPath()+"/nom");
             return true;
         }
         try {
-            File now=new File("./now");
+            File now=new File(Globe.getPath()+"/now");
             boolean flag=now.createNewFile();
             if(!flag) {
-                ErrorUtils.FileCreateError("./now",TAG+"createNow");
+                ErrorUtils.FileCreateError(Globe.getPath()+"/now");
                 return false;
             }
         } catch (IOException e) {
@@ -45,21 +44,21 @@ public class FileUtils {
     }
 
     public static boolean deleteNow() {
-        return new File("./now").delete();
+        return new File(Globe.getPath()+"/now").delete();
     }
 
     public static boolean writeNow(User user) {
         if(user==null) {
-            ErrorUtils.NullPointerInputError(TAG+"writeNow");
+            ErrorUtils.Error();
             return false;
         }
-        File now=new File("./now");
+        File now=new File(Globe.getPath()+"/now");
         FileOutputStream fileInputStream = null;
         try {
             fileInputStream=new FileOutputStream(now);
             byte[]nowStream=user.getStringStream();
             if (nowStream==null) {
-                ErrorUtils.NullPointerInputError(TAG+"writeNow");
+                ErrorUtils.Error();
                 return false;
             }
             fileInputStream.write(nowStream);
@@ -77,14 +76,14 @@ public class FileUtils {
     }
 
     public static ArrayList<String> readNow() {
-        ArrayList<String>list=readFile("./now");
+        ArrayList<String>list=readFile(Globe.getPath()+"/now");
         if (list==null||list.isEmpty()) return null;
         return list;
     }
 
     public static boolean eventInit(String path) {
         if (path==null) {
-            ErrorUtils.NullPointerInputError(TAG+"eventInit");
+            ErrorUtils.Error();
             return false;
         }
         if (!createFolder(path)) {
@@ -101,7 +100,7 @@ public class FileUtils {
 
     public static boolean tmpInit(String path) {
         if (path==null) {
-            ErrorUtils.NullPointerInputError(TAG+"tmpInit");
+            ErrorUtils.Error();
             return false;
         }
         return createFolder(path+"tmpIn")&&createFolder(path+"tmpOut");
@@ -130,7 +129,7 @@ public class FileUtils {
 
     public static boolean deleteFile(String path) {
         if (path==null) {
-            ErrorUtils.NullPointerInputError(TAG+"deleteFile");
+            ErrorUtils.Error();
             return false;
         }
         return new File(path).delete();
@@ -138,7 +137,7 @@ public class FileUtils {
 
     public static boolean deleteFolder(String path) {
         if (path==null) {
-            ErrorUtils.NullPointerInputError(TAG+"deleteFolder");
+            ErrorUtils.Error();
             return false;
         }
         return deleteFolderHelper(new File(path));
@@ -159,7 +158,7 @@ public class FileUtils {
     public static ArrayList<String> readFile(String path) {
         File file=new File(path);
         if (!file.exists()) {
-            ErrorUtils.FileNoExist(path,TAG+"readFile");
+            ErrorUtils.FileNoExist(path);
             return null;
         }
         BufferedReader bufferedReader;
@@ -183,7 +182,7 @@ public class FileUtils {
 
     public static boolean createFolder(String path) {
         if (path==null) {
-            ErrorUtils.NullPointerInputError(TAG+"createFolder");
+            ErrorUtils.Error();
             return false;
         }
         File file=new File(path);
@@ -193,7 +192,7 @@ public class FileUtils {
 
     public static boolean createFile(String path) {
         if (path==null) {
-            ErrorUtils.NullPointerInputError(TAG+"createFile");
+            ErrorUtils.Error();
             return false;
         }
         File file=new File(path);
@@ -209,7 +208,7 @@ public class FileUtils {
 
     public static void openFile(File file) {
         if (file==null) {
-            ErrorUtils.NullPointerInputError(TAG+"openFile");
+            ErrorUtils.Error();
             return;
         }
         try {
@@ -222,14 +221,14 @@ public class FileUtils {
 
     public static boolean moveFile(File file, String to) {
         if (file==null||to==null) {
-            ErrorUtils.NullPointerInputError(TAG+"moveFile");
+            ErrorUtils.Error();
             return false;
         }
         try {
             Files.move(file.toPath(), Path.of(to));
         } catch (FileAlreadyExistsException e) {
             e.printStackTrace();
-            ErrorUtils.FileExist(to,"");
+            ErrorUtils.FileExist(to);
             return false;
         } catch (IOException e) {
             e.printStackTrace();
@@ -240,14 +239,14 @@ public class FileUtils {
 
     public static boolean copyFile(File file,String to) {
         if (file==null||to==null) {
-            ErrorUtils.NullPointerInputError(TAG+"copyFile");
+            ErrorUtils.Error();
             return false;
         }
         try {
             Files.copy(file.toPath(), Path.of(to));
         } catch (FileAlreadyExistsException e) {
             e.printStackTrace();
-            ErrorUtils.FileExist(to,"");
+            ErrorUtils.FileExist(to);
             return false;
         } catch (IOException e) {
             e.printStackTrace();
@@ -258,7 +257,7 @@ public class FileUtils {
 
     public static boolean writeFile(String detail,String path) {
         if(detail==null||path==null) {
-            ErrorUtils.NullPointerInputError(TAG+"writeFile");
+            ErrorUtils.Error();
             return false;
         }
         File now=new File(path);

@@ -2,7 +2,6 @@ package com.example.task_plan_manager.Controllers;
 
 import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Utils.DateBaseUtils;
-import com.example.task_plan_manager.Utils.ErrorUtils;
 import com.example.task_plan_manager.Utils.FileUtils;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -20,7 +19,7 @@ public class EventDetailShow extends VBox {
         vBox.setVisible(have);
         vBox.setManaged(have);
         if (have) {
-            List<String> list= FileUtils.readFile("./data/"+ Globe.getUser().getId()+"/"+event+"/"+path);
+            List<String> list= FileUtils.readFile(Globe.getPath()+"/data/"+ Globe.getUser().getId()+"/"+event+"/"+path);
             for (String s:list) {
                 Label label=new Label();
                 label.setFont(Font.font(20));

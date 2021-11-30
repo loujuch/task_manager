@@ -1,7 +1,6 @@
 package com.example.task_plan_manager.Controllers;
 
 import com.example.task_plan_manager.Event;
-import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Pass;
 import com.example.task_plan_manager.Utils.*;
 import javafx.fxml.FXML;
@@ -9,8 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.util.Pair;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +15,6 @@ import java.util.List;
 public class TaskDetailShow extends EventDetailShow {
 
     private int event;
-    private final static String TAG="com.example.task_plan_manager.TaskDetailShow.";
 
     @FXML private Label name;
     @FXML private Label start;

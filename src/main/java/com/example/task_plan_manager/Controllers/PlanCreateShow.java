@@ -11,14 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 public class PlanCreateShow extends VBox {
 
@@ -77,7 +72,7 @@ public class PlanCreateShow extends VBox {
         String timeStr=continue_time.getText();
         String spaceStr=space.getText();
         if (s==null||left==null||right==null||detailStr==null||timeStr==null||spaceStr==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onFinish");
+            ErrorUtils.Error();
             return;
         }
         if (s.isBlank()||s.length()>255) {
@@ -100,11 +95,11 @@ public class PlanCreateShow extends VBox {
                         files,-1,-1,num,true);
             }
             if (Globe.getUser().isCut()) {
-                FileUtils.createFolder("./tmp/");
+                FileUtils.createFolder(Globe.getPath()+"/tmp/");
                 for (FileShow i:files) {
-                    i.moveFile("./tmp/");
+                    i.moveFile(Globe.getPath()+"/tmp/");
                 }
-                FileUtils.deleteFolder("./tmp/");
+                FileUtils.deleteFolder(Globe.getPath()+"/tmp/");
             }
         }
         Pass.getMainShow().getChildren().clear();

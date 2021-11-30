@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class EventUtils {
 
-    public final static String TAG="com.example.task_plan_manager.Utils.EventUtils.";
 
     public static boolean init() {
         return DateBaseUtils.init()&&FileUtils.init();
@@ -20,7 +19,7 @@ public class EventUtils {
     public static int start() {
         User user=new User();
         if (user.getId()<0) {
-            ErrorUtils.FileParserFail("./now",TAG+"start");
+            ErrorUtils.FileParserFail(Globe.getPath()+"/now");
             return -1;
         }
         Globe.setUser(user);
@@ -29,7 +28,7 @@ public class EventUtils {
 
     public static int userSignUp(String user, String password, int[]ip, int port, String code) {
         if (user==null||password==null||ip==null||code==null) {
-            ErrorUtils.NullPointerInputError(TAG+"userSignUp");
+            ErrorUtils.Error();
             return -1;
         }
         if (port<0) {
@@ -48,7 +47,7 @@ public class EventUtils {
                 FileUtils.deleteNow();
                 return -2;
             }
-            if (!FileUtils.createFolder("./data/"+use.getId())) {
+            if (!FileUtils.createFolder(Globe.getPath()+"/data/"+use.getId())) {
                 DateBaseUtils.deleteUser(use.getId());
                 FileUtils.deleteNow();
                 return -3;
@@ -61,7 +60,7 @@ public class EventUtils {
 
     public static int userSignIn(String user, String password, int[]ip, int port) {
         if (user==null||password==null||ip==null) {
-            ErrorUtils.NullPointerInputError(TAG+"userSignIn");
+            ErrorUtils.Error();
             return -1;
         }
         if(port<0) {
@@ -88,7 +87,7 @@ public class EventUtils {
                                   String detail, ArrayList<FileShow>files, int offset, int time,
                                   int belong, boolean flag) {
         if (name==null||left==null||right==null||detail==null||files==null) {
-            ErrorUtils.NullPointerInputError(TAG + "createEvent");
+            ErrorUtils.Error();
             return -1;
         }
         int num=DateBaseUtils.createEvent(name,
@@ -99,7 +98,7 @@ public class EventUtils {
             ErrorUtils.OperateFail();
             return -2;
         }
-        String path="./data/"+Globe.getUser().getId()+"/"+num+"/";
+        String path=Globe.getPath()+"/data/"+Globe.getUser().getId()+"/"+num+"/";
         if(!FileUtils.eventInit(path)) {
             DateBaseUtils.deleteEventAndFile(num);
             ErrorUtils.OperateFail();
@@ -132,7 +131,7 @@ public class EventUtils {
                     importance,!detail.isBlank(),!remark.isBlank(),!in.isEmpty(),!out.isEmpty(),offset,time);
         }
         if (!flag)return -1;
-        String path="./data/"+Globe.getUser().getId()+"/"+id+"/";
+        String path=Globe.getPath()+"/data/"+Globe.getUser().getId()+"/"+id+"/";
         FileUtils.writeFile(detail,path+"detail");
         FileUtils.writeFile(remark,path+"remark");
         FileUtils.tmpInit(path);
@@ -155,15 +154,15 @@ public class EventUtils {
 
     public static boolean deleteEvent(int id) {
         return DateBaseUtils.deleteEventAndFile(id)&&
-                FileUtils.deleteFolder("./data/"+Globe.getUser().getId()+"/"+id);
+                FileUtils.deleteFolder(Globe.getPath()+"/data/"+Globe.getUser().getId()+"/"+id);
     }
 
     public static int finishEvent(int id, String s, ArrayList<FileShow>files) {
         if (files==null||s==null) {
-            ErrorUtils.NullPointerInputError(TAG+"finishEvent");
+            ErrorUtils.Error();
             return -1;
         }
-        String path="./data/"+Globe.getUser().getId()+"/"+id+"/";
+        String path=Globe.getPath()+"/data/"+Globe.getUser().getId()+"/"+id+"/";
         if (!s.isBlank())FileUtils.writeFile(s, path+"remark");
         path+="out/";
         for (int i=0;i<files.size();++i) {

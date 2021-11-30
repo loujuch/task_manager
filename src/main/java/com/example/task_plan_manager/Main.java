@@ -16,8 +16,6 @@ public class Main implements Initializable {
     private final String COMMON=
             "-fx-background-color: rgb(255,255,255,0); -fx-border-color: rgb(0,0,0,0.4); -fx-border-width: 1;";
 
-    private final static String TAG="com.example.task_plan_manager.Main.";
-
     @FXML private Button task;
     @FXML private Button finished;
     @FXML private Button old;
@@ -32,7 +30,7 @@ public class Main implements Initializable {
     protected void onTask() {
         Button tmp=getSelected();
         if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onTask");
+            ErrorUtils.Error();
             return;
         }
         tmp.setStyle(COMMON);
@@ -47,7 +45,7 @@ public class Main implements Initializable {
     protected void onFinished() {
         Button tmp=getSelected();
         if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onFinished");
+            ErrorUtils.Error();
             return;
         }
         tmp.setStyle(COMMON);
@@ -62,7 +60,7 @@ public class Main implements Initializable {
     protected void onOld() {
         Button tmp=getSelected();
         if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onOld");
+            ErrorUtils.Error();
             return;
         }
         tmp.setStyle(COMMON);
@@ -77,7 +75,7 @@ public class Main implements Initializable {
     protected void onPlan() {
         Button tmp=getSelected();
         if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onPlan");
+            ErrorUtils.Error();
             return;
         }
         tmp.setStyle(COMMON);
@@ -92,7 +90,7 @@ public class Main implements Initializable {
     protected void onNewTask() {
         Button tmp=getSelected();
         if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onNewTask");
+            ErrorUtils.Error();
             return;
         }
         tmp.setStyle(COMMON);
@@ -106,7 +104,7 @@ public class Main implements Initializable {
     protected void onNewPlan() {
         Button tmp=getSelected();
         if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onNewPlan");
+            ErrorUtils.Error();
             return;
         }
         tmp.setStyle(COMMON);
@@ -120,7 +118,7 @@ public class Main implements Initializable {
     protected void onSearch() {
         Button tmp=getSelected();
         if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onSearch");
+            ErrorUtils.Error();
             return;
         }
         tmp.setStyle(COMMON);
@@ -134,7 +132,7 @@ public class Main implements Initializable {
     protected void onAccount() {
         Button tmp=getSelected();
         if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onAccount");
+            ErrorUtils.Error();
             return;
         }
         tmp.setStyle(COMMON);
@@ -154,7 +152,6 @@ public class Main implements Initializable {
             case NEW_PLAN -> new_plan;
             case SEARCH -> search;
             case ACCOUNT -> account;
-            default -> null;
         };
     }
 

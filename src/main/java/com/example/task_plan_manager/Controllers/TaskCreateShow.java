@@ -9,20 +9,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 
 public class TaskCreateShow extends VBox {
-
-    private final static String TAG="com.example.task_plan_manager.TaskCreateShow.";
 
     private final ArrayList<FileShow>files=new ArrayList<>();
     private final int id;
@@ -93,16 +86,11 @@ public class TaskCreateShow extends VBox {
     public void toFinish(int offset, String str, boolean sub) {
         String s=detail.getText();
         if (s==null) {
-            ErrorUtils.NullPointerInputError(TAG+"toFinish()");
+            ErrorUtils.Error();
             return;
         }
-        HashSet<String>set=new HashSet<>();
-        for (FileShow i:files) {
-            if (set.contains(i.getName())) {
-                ErrorUtils.FileNameRepeat();
-                return;
-            }
-            set.add(i.getName());
+        if(!UIUtils.isDuplicate(files)) {
+            return;
         }
         int n=EventUtils.finishEvent(id,s,files);
         if (n!=0)ErrorUtils.OperateFail();
@@ -116,7 +104,7 @@ public class TaskCreateShow extends VBox {
         LocalDate right=end.getValue();
         String detailStr=detail.getText();
         if (s==null||left==null||right==null) {
-            ErrorUtils.NullPointerInputError(TAG+"onFinish");
+            ErrorUtils.Error();
             return;
         }
         if (s.isBlank()||s.length()>255) {

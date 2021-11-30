@@ -4,17 +4,6 @@ import javafx.scene.control.Alert;
 
 public class ErrorUtils {
 
-    private final static String TAG="com.example.task_plan_manager.Utils.ErrorUtils.";
-
-    public static void NullPointerInputError(String s) {
-        if(s==null)s=TAG+"NullPointerInputError";
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("一些错误发生了！");
-        alert.setHeaderText("预期外的空指针传入！");
-        alert.setContentText("传入位置："+s);
-        alert.showAndWait();
-    }
-
     public static void IpFormatError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("一些错误发生了！");
@@ -31,15 +20,15 @@ public class ErrorUtils {
         alert.showAndWait();
     }
 
-    public static void FileCreateError(String s,String str) {
-        if(s==null||str==null) {
-            NullPointerInputError(TAG+"FileCreateFail");
+    public static void FileCreateError(String s) {
+        if(s==null) {
+            Error();
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("一些错误发生了！");
-        alert.setHeaderText("文件\""+s+"\"无法创建！");
-        alert.setContentText("错误路径："+str);
+        alert.setHeaderText(null);
+        alert.setContentText("文件\""+s+"\"无法创建！");
         alert.showAndWait();
     }
 
@@ -54,18 +43,6 @@ public class ErrorUtils {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setContentText("该功能暂未开放！");
-        alert.showAndWait();
-    }
-
-    public static void ArrayLengthError(String s, int i) {
-        if(s==null) {
-            NullPointerInputError(TAG+"ArrayLengthError");
-            return;
-        }
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("一些错误发生了！");
-        alert.setHeaderText("数组长度不符合预期！");
-        alert.setContentText("错误位置："+s+"\n长度为："+i);
         alert.showAndWait();
     }
 
@@ -90,25 +67,25 @@ public class ErrorUtils {
         alert.showAndWait();
     }
 
-    public static void FileExist(String s,String str) {
-        if (s==null||str==null) {
-            NullPointerInputError(TAG+"FileExist");
+    public static void FileExist(String s) {
+        if (s==null) {
+            Error();
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("文件(夹)"+s+"已存在！");
-        alert.setContentText("错误路径："+str);
+        alert.setHeaderText(null);
+        alert.setContentText("文件(夹)"+s+"已存在！");
         alert.showAndWait();
     }
 
-    public static void FileNoExist(String s,String str) {
-        if (s==null||str==null) {
-            NullPointerInputError(TAG+"FileNoExist");
+    public static void FileNoExist(String s) {
+        if (s==null) {
+            Error();
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("文件"+s+"不存在！");
-        alert.setContentText("错误路径："+str);
+        alert.setHeaderText(null);
+        alert.setContentText("文件"+s+"不存在！");
         alert.showAndWait();
     }
 
@@ -119,43 +96,43 @@ public class ErrorUtils {
         alert.showAndWait();
     }
 
-    public static void FileParserFail(String s,String str) {
-        if (s==null||str==null) {
-            NullPointerInputError(TAG+"FileParserFail");
+    public static void FileParserFail(String s) {
+        if (s==null) {
+            Error();
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("无法解析\""+s+"\"文件！");
-        alert.setContentText("错误路径："+str);
+        alert.setHeaderText(null);
+        alert.setContentText("无法解析\""+s+"\"文件！");
         alert.showAndWait();
     }
 
-    public static void FolderCreateFail(String s,String str) {
-        if (s==null||str==null) {
-            NullPointerInputError(TAG+"FileParserFail");
+    public static void FolderCreateFail(String s) {
+        if (s==null) {
+            Error();
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("无法创建\""+s+"\"文件夹！");
-        alert.setContentText("错误路径："+str);
+        alert.setHeaderText(null);
+        alert.setContentText("无法创建\""+s+"\"文件夹！");
         alert.showAndWait();
     }
 
-    public static void FileCreateFail(String s,String str) {
-        if (s==null||str==null) {
-            NullPointerInputError(TAG+"FileParserFail");
+    public static void FileCreateFail(String s) {
+        if (s==null) {
+            Error();
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("无法创建\""+s+"\"文件！");
-        alert.setContentText("错误路径："+str);
+        alert.setHeaderText(null);
+        alert.setContentText("无法创建\""+s+"\"文件！");
         alert.showAndWait();
     }
 
     public static void Error() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
-        alert.setContentText("Error！");
+        alert.setContentText("一些错误发生了！");
         alert.showAndWait();
     }
 
@@ -180,10 +157,14 @@ public class ErrorUtils {
         alert.showAndWait();
     }
 
-    public static void FileDeleteFail(String s, String str) {
+    public static void FileDeleteFail(String s) {
+        if (s==null) {
+            Error();
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("文件"+s+"无法删除！");
-        alert.setContentText("错误路径："+str);
+        alert.setHeaderText(null);
+        alert.setContentText("文件"+s+"无法删除！");
         alert.showAndWait();
     }
 

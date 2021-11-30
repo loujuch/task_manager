@@ -1,6 +1,5 @@
 package com.example.task_plan_manager.Controllers;
 
-import com.example.task_plan_manager.Controllers.EventsShow;
 import com.example.task_plan_manager.Event;
 import com.example.task_plan_manager.Pass;
 import com.example.task_plan_manager.Utils.ErrorUtils;

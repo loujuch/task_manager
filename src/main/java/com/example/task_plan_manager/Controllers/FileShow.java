@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class FileShow extends HBox {
@@ -62,16 +61,20 @@ public class FileShow extends HBox {
 
     public boolean moveFile(String path, boolean flag) {
         if (path==null) {
-            ErrorUtils.NullPointerInputError(TAG+"moveFile");
+            ErrorUtils.Error();
             return false;
         }
         String to=path+name.getText()+file.getName().substring(len);
-        if (path.startsWith(new File("./data/").getAbsolutePath())||flag)return FileUtils.copyFile(file,to);
+        if (path.startsWith(new File(Globe.getPath()+"/data/").getAbsolutePath())||flag)return FileUtils.copyFile(file,to);
         if (Globe.getUser().isCut())return FileUtils.moveFile(file,to);
         else return FileUtils.copyFile(file,to);
     }
 
     public boolean moveFile(String path) {
+        if (path==null) {
+            ErrorUtils.Error();
+            return false;
+        }
         return moveFile(path,false);
     }
 }

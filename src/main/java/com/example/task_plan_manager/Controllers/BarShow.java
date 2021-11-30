@@ -21,7 +21,6 @@ public class BarShow extends VBox {
     private int offset;
     private String s;
     private boolean sub;
-    private final static String TAG="com.example.task_plan_manager.BarShow.";
     private final static String[]STYLE={"#D3D3D3","#FFFFFF","#B0C4DE","#90EE90","#FFFF00",
             "#B0E0E6","#BA55D3","#FF00FF","#FFA500","#FFA500"};
 
@@ -34,7 +33,7 @@ public class BarShow extends VBox {
 
     public BarShow(String name, Date start, Date end, int importance, int id, int offset, String s, boolean sub) {
         if (name==null||start==null||end==null) {
-            ErrorUtils.NullPointerInputError(TAG+"BarShow");
+            ErrorUtils.Error();
             return;
         }
         try {

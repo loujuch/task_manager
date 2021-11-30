@@ -17,6 +17,7 @@ public class EventUpdateShow extends VBox {
     protected boolean setDateBaseShow(VBox label, VBox local, VBox local_add, VBox cloud, VBox cloud_add,
                                     boolean have, boolean io, ArrayList<FileShow> mid, int event) {
         if (label==null||local==null||local_add==null||cloud==null||cloud_add==null) {
+            ErrorUtils.Error();
             return false;
         }
         label.setVisible(have);
@@ -49,6 +50,7 @@ public class EventUpdateShow extends VBox {
 
     protected boolean fileWrite(TextArea text, String path) {
         if (text==null||path==null) {
+            ErrorUtils.Error();
             return false;
         }
         ArrayList<String>tmp= FileUtils.readFile(path);

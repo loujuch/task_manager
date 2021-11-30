@@ -17,8 +17,6 @@ import java.io.IOException;
 
 public class AccountShow extends VBox {
 
-    private final static String TAG="com.example.task_plan_manager.Account.";
-
     @FXML private Label name;
     @FXML private HBox status;
     @FXML private CheckBox cut;
@@ -77,7 +75,7 @@ public class AccountShow extends VBox {
 
     private void logOut() {
         if(!FileUtils.deleteNow()) {
-            ErrorUtils.FileDeleteFail("now",TAG+"logOut");
+            ErrorUtils.FileDeleteFail("now");
             return;
         }
         try {

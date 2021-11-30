@@ -8,21 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.util.Pair;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 public class PlanUpdateShow extends EventUpdateShow {
-
-    private final static String TAG="com.example.task_plan_manager.Controllers.PlanUpdateShow.";
 
     private int event;
     private int new_importance=0;
@@ -44,10 +37,6 @@ public class PlanUpdateShow extends EventUpdateShow {
     @FXML private Button ok;
 
     public PlanUpdateShow(List<Object>tmp, int id, int offset) {
-        if (tmp==null) {
-            ErrorUtils.NullPointerInputError(TAG+"UpdateTaskShow");
-            return;
-        }
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("plan_update_show.fxml"));
@@ -74,7 +63,7 @@ public class PlanUpdateShow extends EventUpdateShow {
         end.setDisable(true);
         continue_time.setDisable(true);
         space.setDisable(true);
-        String path="./data/"+ Globe.getUser().getId()+"/"+id+"/";
+        String path=Globe.getPath()+"/data/"+ Globe.getUser().getId()+"/"+id+"/";
         if ((boolean) tmp.get(4))fileWrite(detail,path+"detail");
         setDateBaseShow(file_label,file_local,file_local_add,file_cloud,file_cloud_add,
                 true,FileUtils.IN,in,event);

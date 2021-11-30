@@ -1,27 +1,20 @@
 package com.example.task_plan_manager.Utils;
 
-import javafx.scene.control.RadioButton;
-
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class OtherUtils {
 
-    private final static String TAG="com.example.task_plan_manager.Utils.OtherUtils.";
     public final static String[]LIST={"name","start","end","importance"};
     public final static String[]ORDER={"asc","desc"};
 
     public static int getSortWhole(int[]sort) {
         if (sort==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getSortWhole");
+            ErrorUtils.Error();
             return -1;
         }
         if (sort.length!=4) {
-            ErrorUtils.ArrayLengthError(TAG+"getSortWhole",sort.length);
+            ErrorUtils.Error();
             return -2;
         }
         int num=0;
@@ -33,11 +26,11 @@ public class OtherUtils {
 
     public static boolean getSortPart(int whole, int[]sort) {
         if (sort==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getSortWhole");
+            ErrorUtils.Error();
             return false;
         }
         if (sort.length!=4) {
-            ErrorUtils.ArrayLengthError(TAG+"getSortWhole",sort.length);
+            ErrorUtils.Error();
             return false;
         }
         int mark=0xff;
@@ -49,7 +42,7 @@ public class OtherUtils {
 
     public static int getIp(int[]ip, String s) {
         if(ip==null||s==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getIp");
+            ErrorUtils.Error();
             return -3;
         }
         if (s.isEmpty()) {
@@ -104,11 +97,11 @@ public class OtherUtils {
 
     public static String setIp(int[]ip, int port) {
         if (ip==null) {
-            ErrorUtils.NullPointerInputError(TAG+"setIp");
+            ErrorUtils.Error();
             return null;
         }
         if (ip.length!=4) {
-            ErrorUtils.ArrayLengthError(TAG+"setIp",ip.length);
+            ErrorUtils.Error();
             return null;
         }
         if (port<0)return "";
@@ -117,7 +110,7 @@ public class OtherUtils {
 
     public static String getDateString(Date date) {
         if (date==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getDateString");
+            ErrorUtils.Error();
             return null;
         }
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
@@ -125,11 +118,11 @@ public class OtherUtils {
 
     public static String getSortString(int[]sort) {
         if (sort==null) {
-            ErrorUtils.NullPointerInputError(TAG+"getSortString");
+            ErrorUtils.Error();
             return "";
         }
         if (sort.length!=4) {
-            ErrorUtils.ArrayLengthError(TAG+"getDateString",sort.length);
+            ErrorUtils.Error();
             return "";
         }
         StringBuilder out= new StringBuilder();
@@ -142,25 +135,5 @@ public class OtherUtils {
 
     public static long getNowTime() {
         return new Date().getTime();
-    }
-
-    public static LocalDate getNowStartTime(int offset) {
-        return Instant.ofEpochMilli(getNowTime()).atZone(ZoneId.systemDefault()).toLocalDate().plusDays(offset).
-                atStartOfDay().toLocalDate();
-    }
-
-    public static LocalDate getOffsetTime(LocalDate date) {
-        return date.atStartOfDay().plusHours(12).toLocalDate();
-    }
-
-    public static LocalDate getStartTime(LocalDate date) {
-        return date.atStartOfDay().toLocalDate();
-    }
-
-    public static String getArrayListString(ArrayList<String> readFile) {
-        if (readFile==null||readFile.isEmpty())return "";
-        StringBuilder tmp= new StringBuilder(readFile.get(0));
-        for (int i=1;i<readFile.size();++i) tmp.append("\n").append(readFile.get(i));
-        return tmp.toString();
     }
 }

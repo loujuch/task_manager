@@ -17,11 +17,10 @@ import java.util.List;
 
 public class UIUtils {
 
-    public final static String TAG="com.example.task_plan_manager.Utils.UIUtils.";
 
     public static void showStart(Stage stage) throws IOException {
         if(stage==null) {
-            ErrorUtils.NullPointerInputError(TAG+"showStart");
+            ErrorUtils.Error();
             return;
         }
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
@@ -34,7 +33,7 @@ public class UIUtils {
 
     public static void showMain(Stage stage) throws IOException {
         if(stage==null) {
-            ErrorUtils.NullPointerInputError(TAG+"showMain");
+            ErrorUtils.Error();
             return;
         }
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main.fxml"));

@@ -2,6 +2,7 @@ package com.example.task_plan_manager.Controllers;
 
 import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Utils.DateBaseUtils;
+import com.example.task_plan_manager.Utils.ErrorUtils;
 import com.example.task_plan_manager.Utils.FileUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,6 +63,10 @@ public class FileLinkShow extends VBox {
     }
 
     private void getItems(ContextMenu contextMenu) {
+        if (contextMenu==null) {
+            ErrorUtils.Error();
+            return;
+        }
         MenuItem menuItem=new MenuItem();
         menuItem.setStyle("-fx-font-size:20");
         menuItem.setText("打开");
