@@ -120,6 +120,7 @@ public class FileUtils {
 
     public static boolean tmpTo(String path) {
         if (!(deleteFolder(path+"in/")&&deleteFolder(path+"out/"))) {
+            ErrorUtils.Error();
             return false;
         }
         File in=new File(path+"tmpIn/");
@@ -131,7 +132,9 @@ public class FileUtils {
         for (String s:inList) {
             moveFile(new File(path+"tmpIn/"+s),path+"in/"+s);
         }
-        for (String s:outList)moveFile(new File(path+"tmpOut/"+s),path+"out/"+s);
+        for (String s:outList) {
+            moveFile(new File(path+"tmpOut/"+s),path+"out/"+s);
+        }
         return deleteFolder(path+"tmpIn/")&&deleteFolder(path+"tmpOut/");
     }
 

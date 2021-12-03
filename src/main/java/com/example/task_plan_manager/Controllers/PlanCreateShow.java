@@ -82,17 +82,16 @@ public class PlanCreateShow extends VBox {
         int spaceInt=Integer.parseInt(spaceStr);
         int timeInt=Integer.parseInt(timeStr);
         if (id==-1) {
-            int num=EventUtils.createEvent(s,left,right,important,detailStr,files,spaceInt,timeInt,-1,true);
+            int num=EventUtils.createEvent(s,left,right,important,detailStr,files,
+                    spaceInt,timeInt,-1,true);
             for (;left.isBefore(right.plusDays(1));left=left.plusDays(spaceInt+timeInt)) {
                 EventUtils.createEvent(s,left,left.plusDays(timeInt-1),important,detailStr,
                         files,-1,-1,num,true);
             }
             if (Globe.getUser().isCut()) {
-                FileUtils.createFolder(Globe.getPath()+"/tmp/");
-                for (FileShow i:files) {
-                    i.moveFile(Globe.getPath()+"/tmp/");
+                for(FileShow fileShow:files) {
+                    FileUtils.deleteFile(fileShow.getPath());
                 }
-                FileUtils.deleteFolder(Globe.getPath()+"/tmp/");
             }
         }
         Pass.getMainShow().getChildren().clear();
