@@ -87,7 +87,7 @@ public class TaskUpdateShow extends EventUpdateShow {
 
     private void onOK(int offset, String s) {
         if (!(UIUtils.isDuplicate(in)&&UIUtils.isDuplicate(out))) {
-            ErrorUtils.Error();
+            ErrorUtils.InputError();
             return;
         }
         String new_name=name.getText();
@@ -96,7 +96,7 @@ public class TaskUpdateShow extends EventUpdateShow {
         String new_detail=detail.getText();
         String new_remark=remark.getText();
         if (new_name.isBlank()) {
-            ErrorUtils.InputLengthError();
+            ErrorUtils.NameError();
             return;
         }
         EventUtils.updateEvent(event,new_name,new_start,new_end,new_importance,

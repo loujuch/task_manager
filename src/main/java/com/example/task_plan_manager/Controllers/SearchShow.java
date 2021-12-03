@@ -58,7 +58,7 @@ public class SearchShow extends VBox {
                 toInstant(ZoneOffset.of("+8")).toEpochMilli()-1;
         long end_second_time=end_second.getValue().plusDays(1).atStartOfDay().
                 toInstant(ZoneOffset.of("+8")).toEpochMilli()-1;
-        if (s.isBlank()) {
+        if (s.isBlank()||s.length()>255) {
             ErrorUtils.NameError();
             return;
         }

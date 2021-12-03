@@ -81,7 +81,7 @@ public class PlanUpdateShow extends EventUpdateShow {
         int new_offset=Integer.parseInt(space.getText());
         int new_continue=Integer.parseInt(continue_time.getText());
         if (new_continue<=0||new_name.isBlank()) {
-            ErrorUtils.Error();
+            ErrorUtils.NameError();
             return;
         }
         EventUtils.updateEvent(event,new_name,new_start,new_end,new_importance,

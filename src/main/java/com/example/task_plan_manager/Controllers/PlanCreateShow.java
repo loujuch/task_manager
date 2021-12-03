@@ -76,6 +76,7 @@ public class PlanCreateShow extends VBox {
             return;
         }
         if (!UIUtils.isDuplicate(files)) {
+            ErrorUtils.InputError();
             return;
         }
         int spaceInt=Integer.parseInt(spaceStr);

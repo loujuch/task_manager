@@ -37,7 +37,7 @@
                     <Font size="20.0" />
                 </font>
             </Label>
-            <TextField fx:id="user_name" minHeight="40.0" prefWidth="170.0" promptText="6-15个字符">
+            <TextField fx:id="user_name" minHeight="40.0" prefWidth="170.0" promptText="1-15个字符">
                 <font>
                     <Font size="17.0" />
                 </font>

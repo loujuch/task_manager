@@ -54,7 +54,7 @@ public class AccountShow extends VBox {
         int[]sort={-1,-1,-1,-1};
         for (int i=0;i<4;++i) {
            if (!setSort(sort,i,(int) getSort(i).getValue()%10,"升序".equals(getOrder(i).getValue()))) {
-               ErrorUtils.Error();
+               ErrorUtils.InputError();
                return;
            }
         }

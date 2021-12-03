@@ -85,6 +85,7 @@ public class TaskCreateShow extends VBox {
             return;
         }
         if(!UIUtils.isDuplicate(files)) {
+            ErrorUtils.InputError();
             return;
         }
         int n=EventUtils.finishEvent(id,s,files);

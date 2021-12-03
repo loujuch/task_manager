@@ -60,6 +60,13 @@ public class ErrorUtils {
         alert.showAndWait();
     }
 
+    public static void InputError() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText("请保证输入正确！");
+        alert.showAndWait();
+    }
+
     public static void InputLengthError() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);

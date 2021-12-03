@@ -52,7 +52,7 @@ public class HelloController {
     protected void onEntry() throws IOException {
         String user=user_name.getText();
         String password=pass.getText();
-        if (user.length()<6||user.length()>15||password.length()<6||password.length()>15) {
+        if (user.isBlank()||user.length()>15||password.length()<6||password.length()>15) {
             ErrorUtils.InputLengthError();
             return;
         }
