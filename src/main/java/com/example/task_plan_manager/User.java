@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 public class User {
 
-    private final static String TAG="com.example.task_plan_manager.User.";
-
     private int id;
     private String name;
     private String password;

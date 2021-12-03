@@ -1,6 +1,5 @@
 package com.example.task_plan_manager.Controllers;
 
-import com.example.task_plan_manager.Event;
 import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Pass;
 import com.example.task_plan_manager.Utils.ErrorUtils;
@@ -62,16 +61,11 @@ public class TaskUpdateShow extends EventUpdateShow {
         }
         this.event=id;
         name.setText((String) tmp.get(0));
-        importance.getItems().add(Event.IMPORT[0]);
-        importance.getItems().add(new Separator());
-        importance.getItems().add(Event.IMPORT[1]);
-        importance.getItems().add(new Separator());
-        importance.getItems().add(Event.IMPORT[2]);
-        importance.setValue(Event.IMPORT[(int) tmp.get(1)]);
+        UIUtils.setChoiceBox(importance,(int) tmp.get(1));
         new_importance=(int) tmp.get(1);
         start.setValue(new Date((long) tmp.get(2)).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         end.setValue(new Date((long) tmp.get(3)).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        String path=Globe.getPath()+"/data/"+ Globe.getUser().getId()+"/"+id+"/";
+        String path=Globe.getPath()+"/.data/"+ Globe.getUser().getId()+"/"+id+"/";
         if ((boolean) tmp.get(4))fileWrite(detail,path+"detail");
         boolean finish= (boolean) tmp.get(10);
         remark_label.setVisible(finish);

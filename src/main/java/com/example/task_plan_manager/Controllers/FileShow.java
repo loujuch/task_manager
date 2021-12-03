@@ -16,8 +16,6 @@ import java.util.ArrayList;
 
 public class FileShow extends HBox {
 
-    private final static String TAG="com.example.task_plan_manager.FileShow.";
-
     private final VBox parent;
     private final File file;
     private int len;
@@ -65,7 +63,7 @@ public class FileShow extends HBox {
             return false;
         }
         String to=path+name.getText()+file.getName().substring(len);
-        if (path.startsWith(new File(Globe.getPath()+"/data/").getAbsolutePath())||flag)return FileUtils.copyFile(file,to);
+        if (path.startsWith(new File(Globe.getPath()+"/.data/").getAbsolutePath())||flag)return FileUtils.copyFile(file,to);
         if (Globe.getUser().isCut())return FileUtils.moveFile(file,to);
         else return FileUtils.copyFile(file,to);
     }

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class EventUtils {
 
-
     public static boolean init() {
         return DateBaseUtils.init()&&FileUtils.init();
     }
@@ -19,7 +18,7 @@ public class EventUtils {
     public static int start() {
         User user=new User();
         if (user.getId()<0) {
-            ErrorUtils.FileParserFail(Globe.getPath()+"/now");
+            ErrorUtils.FileParserFail(Globe.getPath()+"/.now");
             return -1;
         }
         Globe.setUser(user);
@@ -47,7 +46,7 @@ public class EventUtils {
                 FileUtils.deleteNow();
                 return -2;
             }
-            if (!FileUtils.createFolder(Globe.getPath()+"/data/"+use.getId())) {
+            if (!FileUtils.createFolder(Globe.getPath()+"/.data/"+use.getId())) {
                 DateBaseUtils.deleteUser(use.getId());
                 FileUtils.deleteNow();
                 return -3;
@@ -98,7 +97,7 @@ public class EventUtils {
             ErrorUtils.OperateFail();
             return -2;
         }
-        String path=Globe.getPath()+"/data/"+Globe.getUser().getId()+"/"+num+"/";
+        String path=Globe.getPath()+"/.data/"+Globe.getUser().getId()+"/"+num+"/";
         if(!FileUtils.eventInit(path)) {
             DateBaseUtils.deleteEventAndFile(num);
             ErrorUtils.OperateFail();
@@ -131,7 +130,7 @@ public class EventUtils {
                     importance,!detail.isBlank(),!remark.isBlank(),!in.isEmpty(),!out.isEmpty(),offset,time);
         }
         if (!flag)return -1;
-        String path=Globe.getPath()+"/data/"+Globe.getUser().getId()+"/"+id+"/";
+        String path=Globe.getPath()+"/.data/"+Globe.getUser().getId()+"/"+id+"/";
         FileUtils.writeFile(detail,path+"detail");
         FileUtils.writeFile(remark,path+"remark");
         FileUtils.tmpInit(path);
@@ -154,7 +153,7 @@ public class EventUtils {
 
     public static boolean deleteEvent(int id) {
         return DateBaseUtils.deleteEventAndFile(id)&&
-                FileUtils.deleteFolder(Globe.getPath()+"/data/"+Globe.getUser().getId()+"/"+id);
+                FileUtils.deleteFolder(Globe.getPath()+"/.data/"+Globe.getUser().getId()+"/"+id);
     }
 
     public static int finishEvent(int id, String s, ArrayList<FileShow>files) {
@@ -162,7 +161,7 @@ public class EventUtils {
             ErrorUtils.Error();
             return -1;
         }
-        String path=Globe.getPath()+"/data/"+Globe.getUser().getId()+"/"+id+"/";
+        String path=Globe.getPath()+"/.data/"+Globe.getUser().getId()+"/"+id+"/";
         if (!s.isBlank())FileUtils.writeFile(s, path+"remark");
         path+="out/";
         for (int i=0;i<files.size();++i) {

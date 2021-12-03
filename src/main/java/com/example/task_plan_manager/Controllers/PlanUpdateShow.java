@@ -1,6 +1,5 @@
 package com.example.task_plan_manager.Controllers;
 
-import com.example.task_plan_manager.Event;
 import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Pass;
 import com.example.task_plan_manager.Utils.*;
@@ -48,12 +47,7 @@ public class PlanUpdateShow extends EventUpdateShow {
         }
         event=id;
         name.setText((String) tmp.get(0));
-        importance.getItems().add(Event.IMPORT[0]);
-        importance.getItems().add(new Separator());
-        importance.getItems().add(Event.IMPORT[1]);
-        importance.getItems().add(new Separator());
-        importance.getItems().add(Event.IMPORT[2]);
-        importance.setValue(Event.IMPORT[(int) tmp.get(1)]);
+        UIUtils.setChoiceBox(importance,(int) tmp.get(1));
         space.setText((int)tmp.get(8)+"");
         continue_time.setText((int)tmp.get(9)+"");
         new_importance=(int) tmp.get(1);
@@ -63,7 +57,7 @@ public class PlanUpdateShow extends EventUpdateShow {
         end.setDisable(true);
         continue_time.setDisable(true);
         space.setDisable(true);
-        String path=Globe.getPath()+"/data/"+ Globe.getUser().getId()+"/"+id+"/";
+        String path=Globe.getPath()+"/.data/"+ Globe.getUser().getId()+"/"+id+"/";
         if ((boolean) tmp.get(4))fileWrite(detail,path+"detail");
         setDateBaseShow(file_label,file_local,file_local_add,file_cloud,file_cloud_add,
                 true,FileUtils.IN,in,event);

@@ -44,12 +44,7 @@ public class TaskCreateShow extends VBox {
         }
         start.setValue(LocalDate.now());
         end.setValue(LocalDate.now().plusDays(7));
-        importance.getItems().add(Event.IMPORT[0]);
-        importance.getItems().add(new Separator());
-        importance.getItems().add(Event.IMPORT[1]);
-        importance.getItems().add(new Separator());
-        importance.getItems().add(Event.IMPORT[2]);
-        importance.setValue(Event.IMPORT[0]);
+        UIUtils.setChoiceBox(importance,0);
         add.setOnAction(e -> UIUtils.onAddFile(add_file,files));
         id=-1;
         finish.setOnAction(e -> onFinish());

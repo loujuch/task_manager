@@ -18,20 +18,32 @@ public class FileUtils {
     public final static boolean OUT=true;
 
     public static boolean init() {
-        return createFolder(Globe.getPath()+"/data");
+        return createFolder(Globe.getPath()+"/.data");
+    }
+
+    public static boolean createExist() {
+        return createFile(Globe.getPath()+"/.exist");
+    }
+
+    public static boolean exist() {
+        return existFile(Globe.getPath()+"/.exist");
+    }
+
+    public static boolean deleteExist() {
+        return deleteFile(Globe.getPath()+"/.exist");
     }
 
     public static boolean existNow() {
-        return existFile(Globe.getPath()+"/now");
+        return existFile(Globe.getPath()+"/.now");
     }
 
     public static boolean createNow() {
         if(existNow()) {
-            ErrorUtils.FileExist(Globe.getPath()+"/nom");
+            ErrorUtils.FileExist(Globe.getPath()+"/.now");
             return true;
         }
         try {
-            File now=new File(Globe.getPath()+"/now");
+            File now=new File(Globe.getPath()+"/.now");
             boolean flag=now.createNewFile();
             if(!flag) {
                 ErrorUtils.FileCreateError(Globe.getPath()+"/now");
@@ -44,7 +56,7 @@ public class FileUtils {
     }
 
     public static boolean deleteNow() {
-        return new File(Globe.getPath()+"/now").delete();
+        return new File(Globe.getPath()+"/.now").delete();
     }
 
     public static boolean writeNow(User user) {
@@ -52,7 +64,7 @@ public class FileUtils {
             ErrorUtils.Error();
             return false;
         }
-        File now=new File(Globe.getPath()+"/now");
+        File now=new File(Globe.getPath()+"/.now");
         FileOutputStream fileInputStream = null;
         try {
             fileInputStream=new FileOutputStream(now);
@@ -76,7 +88,7 @@ public class FileUtils {
     }
 
     public static ArrayList<String> readNow() {
-        ArrayList<String>list=readFile(Globe.getPath()+"/now");
+        ArrayList<String>list=readFile(Globe.getPath()+"/.now");
         if (list==null||list.isEmpty()) return null;
         return list;
     }

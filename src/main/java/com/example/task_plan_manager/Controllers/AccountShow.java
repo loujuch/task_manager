@@ -75,7 +75,7 @@ public class AccountShow extends VBox {
 
     private void logOut() {
         if(!FileUtils.deleteNow()) {
-            ErrorUtils.FileDeleteFail("now");
+            ErrorUtils.FileDeleteFail(".now");
             return;
         }
         try {

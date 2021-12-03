@@ -19,7 +19,7 @@ public class EventDetailShow extends VBox {
         vBox.setVisible(have);
         vBox.setManaged(have);
         if (have) {
-            List<String> list= FileUtils.readFile(Globe.getPath()+"/data/"+ Globe.getUser().getId()+"/"+event+"/"+path);
+            List<String> list= FileUtils.readFile(Globe.getPath()+"/.data/"+ Globe.getUser().getId()+"/"+event+"/"+path);
             for (String s:list) {
                 Label label=new Label();
                 label.setFont(Font.font(20));

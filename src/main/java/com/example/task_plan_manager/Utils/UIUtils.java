@@ -1,9 +1,12 @@
 package com.example.task_plan_manager.Utils;
 
 import com.example.task_plan_manager.Controllers.FileShow;
+import com.example.task_plan_manager.Event;
 import com.example.task_plan_manager.HelloApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -74,5 +77,17 @@ public class UIUtils {
             set.add(i.getName());
         }
         return true;
+    }
+
+    public static void setChoiceBox(ChoiceBox importance, int n) {
+        if (importance==null) {
+            return;
+        }
+        importance.getItems().add(Event.IMPORT[0]);
+        importance.getItems().add(new Separator());
+        importance.getItems().add(Event.IMPORT[1]);
+        importance.getItems().add(new Separator());
+        importance.getItems().add(Event.IMPORT[2]);
+        importance.setValue(Event.IMPORT[n]);
     }
 }

@@ -40,7 +40,7 @@
                                         <Font size="20.0" />
                                     </font>
                                 </Label>
-                                <DatePicker fx:id="start" minHeight="30.0" minWidth="330.0" />
+                                <DatePicker fx:id="start" editable="false" minHeight="30.0" minWidth="330.0" />
                             </children>
                         </HBox>
                         <Label maxHeight="10.0" minHeight="10.0" text="Label" visible="false" />
@@ -51,7 +51,7 @@
                                         <Font size="20.0" />
                                     </font>
                                 </Label>
-                                <DatePicker fx:id="end" minHeight="30.0" minWidth="330.0" />
+                                <DatePicker fx:id="end" editable="false" minHeight="30.0" minWidth="330.0" />
                             </children>
                         </HBox>
                         <Label maxHeight="10.0" minHeight="10.0" text="Label" visible="false" />

@@ -13,6 +13,8 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        if (FileUtils.exist())return;
+        FileUtils.createExist();
         if(!EventUtils.init()) {
             ErrorUtils.InitFail();
             return;
@@ -26,6 +28,11 @@ public class HelloApplication extends Application {
         } else {
             UIUtils.showStart(stage);
         }
+    }
+
+    @Override
+    public void stop() {
+        FileUtils.deleteExist();
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,5 @@
 package com.example.task_plan_manager.Controllers;
 
-import com.example.task_plan_manager.Event;
 import com.example.task_plan_manager.Globe;
 import com.example.task_plan_manager.Pass;
 import com.example.task_plan_manager.Utils.ErrorUtils;
@@ -16,8 +15,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PlanCreateShow extends VBox {
-
-    private final static String TAG="com.example.task_plan_manager.PlanCreateShow.";
 
     private final ArrayList<FileShow>files;
     private final int id;
@@ -46,12 +43,7 @@ public class PlanCreateShow extends VBox {
         }
         start.setValue(LocalDate.now());
         end.setValue(LocalDate.now().plusDays(7));
-        importance.getItems().add(Event.IMPORT[0]);
-        importance.getItems().add(new Separator());
-        importance.getItems().add(Event.IMPORT[1]);
-        importance.getItems().add(new Separator());
-        importance.getItems().add(Event.IMPORT[2]);
-        importance.setValue(Event.IMPORT[0]);
+        UIUtils.setChoiceBox(importance,0);
         files=new ArrayList<>();
         add.setOnAction(e -> UIUtils.onAddFile(add_file,files));
         id=-1;
