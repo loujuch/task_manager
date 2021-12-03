@@ -1,7 +1,7 @@
 package com.example.task_plan_manager.Utils;
 
-import com.example.task_plan_manager.Globe;
-import com.example.task_plan_manager.User;
+import com.example.task_plan_manager.other.Globe;
+import com.example.task_plan_manager.other.User;
 
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;

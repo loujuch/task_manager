@@ -1,8 +1,8 @@
 package com.example.task_plan_manager.Utils;
 
 import com.example.task_plan_manager.Controllers.FileShow;
-import com.example.task_plan_manager.Globe;
-import com.example.task_plan_manager.User;
+import com.example.task_plan_manager.other.Globe;
+import com.example.task_plan_manager.other.User;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

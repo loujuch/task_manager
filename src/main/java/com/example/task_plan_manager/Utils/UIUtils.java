@@ -1,8 +1,8 @@
 package com.example.task_plan_manager.Utils;
 
 import com.example.task_plan_manager.Controllers.FileShow;
-import com.example.task_plan_manager.Event;
-import com.example.task_plan_manager.HelloApplication;
+import com.example.task_plan_manager.other.Event;
+import com.example.task_plan_manager.other.HelloApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;

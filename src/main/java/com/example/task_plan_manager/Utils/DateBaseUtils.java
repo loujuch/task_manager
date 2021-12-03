@@ -1,6 +1,6 @@
 package com.example.task_plan_manager.Utils;
 
-import com.example.task_plan_manager.*;
+import com.example.task_plan_manager.other.*;
 import javafx.util.Pair;
 
 import java.sql.*;
@@ -51,7 +51,7 @@ public class DateBaseUtils {
         Statement statement=null;
         try {
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:"+Globe.getPath()+"/task_plan.db");
+            connection=DriverManager.getConnection("jdbc:sqlite:"+ Globe.getPath()+"/task_plan.db");
             statement=connection.createStatement();
             statement.executeUpdate(s);
         } catch (ClassNotFoundException | SQLException e) {

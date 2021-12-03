@@ -1,7 +1,7 @@
 package com.example.task_plan_manager.Controllers;
 
-import com.example.task_plan_manager.Globe;
-import com.example.task_plan_manager.Pass;
+import com.example.task_plan_manager.other.Globe;
+import com.example.task_plan_manager.other.Pass;
 import com.example.task_plan_manager.Utils.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

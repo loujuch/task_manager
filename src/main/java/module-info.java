@@ -7,7 +7,9 @@ module com.example.task_plan_manager {
 
 
     opens com.example.task_plan_manager to javafx.fxml;
-    exports com.example.task_plan_manager;
     exports com.example.task_plan_manager.Controllers;
     opens com.example.task_plan_manager.Controllers to javafx.fxml;
+    exports com.example.task_plan_manager.other;
+    opens com.example.task_plan_manager.other to javafx.fxml;
+    exports com.example.task_plan_manager;
 }

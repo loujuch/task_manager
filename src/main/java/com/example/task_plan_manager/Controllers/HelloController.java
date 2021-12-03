@@ -1,6 +1,6 @@
 package com.example.task_plan_manager.Controllers;
 
-import com.example.task_plan_manager.Globe;
+import com.example.task_plan_manager.other.Globe;
 import com.example.task_plan_manager.Utils.ErrorUtils;
 import com.example.task_plan_manager.Utils.EventUtils;
 import com.example.task_plan_manager.Utils.OtherUtils;
