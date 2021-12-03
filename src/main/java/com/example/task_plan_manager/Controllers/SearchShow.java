@@ -34,9 +34,9 @@ public class SearchShow extends VBox {
             e.printStackTrace();
         }
         start_first.setValue(LocalDate.now().atStartOfDay().toLocalDate());
-        start_second.setValue(LocalDate.now().plusDays(1));
+        start_second.setValue(LocalDate.now().plusDays(7));
         end_first.setValue(LocalDate.now().atStartOfDay().toLocalDate());
-        end_second.setValue(LocalDate.now().plusDays(1));
+        end_second.setValue(LocalDate.now().plusDays(7));
         importance.getItems().add("");
         importance.getItems().add(new Separator());
         importance.getItems().add(Event.IMPORT[0]);
@@ -58,7 +58,7 @@ public class SearchShow extends VBox {
                 toInstant(ZoneOffset.of("+8")).toEpochMilli()-1;
         long end_second_time=end_second.getValue().plusDays(1).atStartOfDay().
                 toInstant(ZoneOffset.of("+8")).toEpochMilli()-1;
-        if (s.isBlank()||s.length()>255) {
+        if (s.length()>255) {
             ErrorUtils.NameError();
             return;
         }
