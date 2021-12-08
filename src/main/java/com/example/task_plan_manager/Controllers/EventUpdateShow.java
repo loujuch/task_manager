@@ -24,10 +24,7 @@ public class EventUpdateShow extends VBox {
         label.setManaged(have);
         if (!have)return true;
         List<Pair<Integer, String>> tmp= DateBaseUtils.getFile(Globe.getUser().getId(),event,io,-1);
-        if (tmp==null) {
-            local.setVisible(false);
-            local.setManaged(false);
-        } else {
+        if(tmp!=null) {
             for (Pair<Integer, String> i:tmp) {
                 FileShow fileShow=new FileShow(local_add,new File(i.getValue()),mid);
                 local_add.getChildren().add(fileShow);
