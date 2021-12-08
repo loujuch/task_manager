@@ -22,7 +22,7 @@ public class BarShow extends VBox {
     private String s;
     private boolean sub;
     private final static String[]STYLE={"#D3D3D3","#FFFFFF","#B0C4DE","#90EE90","#FFFF00",
-            "#B0E0E6","#BA55D3","#FF00FF","#FFA500","#FFA500"};
+            "#B0E0E6","#BA55D3","#FFA500","#FFA500","#FF00FF"};
 
     @FXML private Button way;
     @FXML private HBox tran;
@@ -37,8 +37,7 @@ public class BarShow extends VBox {
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("bar_show.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("bar_show.fxml"));
             loader.setRoot(this);
             loader.setController(this);
             loader.load();
